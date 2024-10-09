@@ -1,36 +1,27 @@
-import Joi from "joi"
+import Joi from "joi";
 
-const registerSchema = Joi.object({
-    email: Joi
+const loginSchema = Joi.object({
+    email : Joi
     .string()
-    .email({tlds:false})
     .required()
+    .trim()
+    .email({tlds:false})
     .messages({
         "string.empty" : "Email is required!!"
     }),
-    password: Joi.string()
+    password : Joi
+    .string()
     .required()
     .pattern(/^[0-9a-zA-Z]{6,}/)
     .messages({
         "string.empty" : "Password is required!!",
         "string.pattern.base": "Password must contain a-z A-Z 0-9 and must be at least 6 characters"
-    }),
-    confirmPassword: Joi.string()
-    .required()
-    .valid(Joi.ref("password"))
-    .messages({
-        "string.empty" : "Confirm Password is required",
-        "any.ony" : "Password and Confirm Password is not match!!!"
     })
-});
-
-const loginSchema = Joi.object({
-    
 })
 
 
-const validateRegister = (input) => {
-    const { error } = registerSchema.validate(input,{
+const validateLogin = (input) => {
+    const { error } = loginSchema.validate(input,{
         abortEarly : false
     })
 
@@ -49,4 +40,4 @@ const validateRegister = (input) => {
     return null
 }
 
-export default validateRegister
+export default validateLogin

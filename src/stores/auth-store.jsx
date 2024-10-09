@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { login, register } from "../api/auth";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 
@@ -15,10 +15,10 @@ const useAuthStore = create( persist(( set , get ) => ({
         try {
             const resp = await register(form);
             console.log("resp",resp.data)
-            toast.success(resp.data.message)
+            // toast.success(resp.data.message)
         } catch (err) {
             console.log(err.response.data.message)
-            toast.error(err.response.data.message)
+            // toast.error(err.response.data.message)
         }
     },
 
@@ -26,7 +26,7 @@ const useAuthStore = create( persist(( set , get ) => ({
         try {
             const resp = await login(form);
             console.log("resp",resp.data)
-            toast.success(resp.data.message)
+            // toast.success(resp.data.message)
 
             set({
                 user : resp.data.user,
@@ -35,7 +35,7 @@ const useAuthStore = create( persist(( set , get ) => ({
 
         } catch (err) {
             console.log(err.response.data.message)
-            toast.error(err.response.data.message)
+            // toast.error(err.response.data.message)
         }
     },
 

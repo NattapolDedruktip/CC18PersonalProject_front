@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import useAuthStore from '../stores/auth-store'
-
-
+import validateRegister from '../utils/validatorRegister'
+import { useNavigate } from 'react-router-dom'
 
 
 const initialState = {
   email: "",
   password: "",
   confirmPassword: "",
+  role : ""
 }
 
 
@@ -18,36 +19,43 @@ function Register() {
 
   const [formError, setFormError] = useState({})
 
+  const navigate = useNavigate()
+
   const [form, setForm] = useState({
     email: "",
     password: "",
     confirmPassword: "",
+    role: ""
   })
 
   const hdlOnChange = (e) => {
-    // console.log(e.target.name, e.target.value)
+    console.log(e.target.name, e.target.value)
     setForm({
       ...form,
       [e.target.name]: e.target.value
     })
   }
 
+
+
   const hdlSubmit = (e) => {
     e.preventDefault()
-    // console.log(form)
-
+    console.log(form)
+    
+    //step 1 validate with joi
     const error = validateRegister(form)
-    // console.log(error)
+    console.log(error)
     if (error) {
       return setFormError(error);
     }
-    //step 1 validate with joi
-    //step 2 send to back
+    //step 2 send to backend DB
 
-    // console.log(form)
+    console.log(form)
     actionRegister(form)
 
     setForm(initialState)
+
+    navigate("/")
 
   }
 
@@ -104,7 +112,7 @@ function Register() {
               onChange={hdlOnChange}
               type="password"
               placeholder="CONFIRM PASSWORD"
-              className="w-full px-6 py-4 text-center bg-InputBg text-InputText rounded-full text-xl font-bold tracking-widest font-bebas focus:outline-none"
+              className="w-full px-6 py-4 text-center bg-InputBg text-InputText rounded-full text-[18px] font-bold tracking-widest font-bebas focus:outline-none"
             />
 
             {
@@ -115,6 +123,18 @@ function Register() {
 
 
           </div>
+
+          <select
+            className="w-full px-6 py-4 text-center bg-InputBg text-InputText rounded-full text-xl font-bold tracking-widest font-bebas focus:outline-none"
+            name='role'
+            value={form.role}
+            onChange={hdlOnChange}
+          >
+            <option value="" disabled >Select Role</option>
+            <option value="USER">USER</option>
+            <option value="HOST">HOST</option>
+          </select>
+
 
           <div className="text-center">
             <button
