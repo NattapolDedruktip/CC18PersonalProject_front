@@ -8,6 +8,7 @@ const initialState = {
   email: "",
   password: "",
   confirmPassword: "",
+  role : ""
 }
 
 
@@ -18,34 +19,41 @@ function Register() {
 
   const [formError, setFormError] = useState({})
 
+
+
   const [form, setForm] = useState({
     email: "",
     password: "",
     confirmPassword: "",
+    role: ""
   })
 
   const hdlOnChange = (e) => {
-    // console.log(e.target.name, e.target.value)
+    console.log(e.target.name, e.target.value)
     setForm({
       ...form,
       [e.target.name]: e.target.value
     })
   }
 
+  const hdlUpdateMember = (e) => {
+
+  }
+
   const hdlSubmit = (e) => {
     e.preventDefault()
     // console.log(form)
 
-    const error = validateRegister(form)
+    // const error = validateRegister(form)
     // console.log(error)
-    if (error) {
-      return setFormError(error);
-    }
+    // if (error) {
+    //   return setFormError(error);
+    // }
     //step 1 validate with joi
     //step 2 send to back
 
-    // console.log(form)
-    actionRegister(form)
+    console.log(form)
+    // actionRegister(form)
 
     setForm(initialState)
 
@@ -115,6 +123,18 @@ function Register() {
 
 
           </div>
+
+          <select
+            className="w-full px-6 py-4 text-center bg-InputBg text-InputText rounded-full text-xl font-bold tracking-widest font-bebas focus:outline-none"
+            name='role'
+            value={form.role}
+            onChange={hdlOnChange}
+          >
+            <option value="" disabled >Select Role</option>
+            <option value="USER">USER</option>
+            <option value="HOST">HOST</option>
+          </select>
+
 
           <div className="text-center">
             <button
