@@ -9,13 +9,13 @@ function Login() {
   const [formError, setFormError] = useState({});
 
   const [form, setForm] = useState({
-    email: "",
-    password: "",
+    email: "anddy@gamil.com",
+    password: "123456",
   });
 
   //zustand
-  const actionLogin = useAuthStore((state) => state.actionLogin);
   const user = useAuthStore((state) => state.user);
+  const actionLogin = useAuthStore((state) => state.actionLogin);
   const token = useAuthStore((state) => state.token);
 
   const hdlChange = (e) => {
@@ -32,26 +32,27 @@ function Login() {
 
     //validate with joi
     const error = validateLogin(form);
-    console.log(error);
+    console.log(error, "<<<<<");
 
     if (error) {
-      return setFormError(error);
+      setFormError(error);
+      alert("Email or Password is Invalid!!");
+      return;
     }
 
     //login
 
-    await actionLogin(form);
+    const resp = await actionLogin(form);
+    console.log("resp", resp.data.payload.role);
+    console.log("=============");
 
-    console.log(user.user.id);
-    console.log(user.user.role);
-    console.log(user.user.email);
-    console.log(token);
+    const role = resp.data.payload.role;
 
-    // if(role ==="HOST") {
-    //     navigate("/admin")
-    // }else{
-    //     navigate("home/user")
-    // }
+    if (role === "HOST") {
+      navigate("/admin");
+    } else {
+      navigate("/user/search");
+    }
   };
 
   return (
@@ -65,6 +66,7 @@ function Login() {
           <div>
             <input
               name="email"
+              value={form.email}
               onChange={hdlChange}
               type="email"
               placeholder="EMAIL"
@@ -79,6 +81,7 @@ function Login() {
           <div>
             <input
               name="password"
+              value={form.password}
               onChange={hdlChange}
               type="password"
               placeholder="PASSWORD"
