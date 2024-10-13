@@ -67,7 +67,7 @@ function Map() {
         map.flyTo(e.latlng, 16);
         setMyLocation(e.latlng);
       });
-    }, [map]);
+    }, []);
     return myLocation === null ? null : (
       <Marker position={myLocation}>
         <Popup>You are here</Popup>
@@ -80,7 +80,7 @@ function Map() {
       {/* 1 */}
       <MapContainer
         center={[13, 100]}
-        zoom={14}
+        zoom={7}
         className="m-auto p-10 text-InputBg  bg-white w-[95%] h-[85vh] border-8 border-MainOrange"
       >
         {/* 2 */}

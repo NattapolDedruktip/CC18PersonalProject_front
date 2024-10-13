@@ -1,9 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function MainLogo() {
+function UserMainLogo() {
   return (
-    <Link to={"/"} className="bg-MyBg flex items-start justify-start ">
+    <Link
+      to={"/user/search"}
+      className="bg-MyBg flex items-start justify-start "
+    >
       <div className="text-MainOrange font-body text-7xl border-8 border-MainOrange rounded-md px-6 py-1 mt-2 ml-2">
         FAKE-HOTE
       </div>
@@ -11,4 +14,4 @@ function MainLogo() {
   );
 }
 
-export default MainLogo;
+export default UserMainLogo;

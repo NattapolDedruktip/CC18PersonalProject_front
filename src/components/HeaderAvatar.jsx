@@ -44,7 +44,9 @@ function HeaderAvatar() {
         <DropdownMenuContent className="bg-MainOrange">
           <DropdownMenuItem>
             <div
-              onClick={() => {}}
+              onClick={() => {
+                navigate("/userInfo");
+              }}
               className="flex justify-center bg-MyBg w-full text-MainOrange text-bebas font-bold py-2 px-3 cursor-pointer rounded-sm hover:bg-neutral-700 hover:duration-200 active:bg-green-400"
             >
               Account
