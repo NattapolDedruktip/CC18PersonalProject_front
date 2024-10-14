@@ -3,7 +3,7 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { LogOut } from "lucide-react";
 
-function SidebarUser() {
+function SidebarHost() {
   const navigate = useNavigate();
 
   const actionLogout = useAuthStore((state) => state.actionLogout);
@@ -12,7 +12,6 @@ function SidebarUser() {
     actionLogout();
     navigate("/");
   };
-
   return (
     <div className="flex flex-col justify-between h-[90vh]">
       <div className="flex flex-col justify-around flex-1 ">
@@ -25,7 +24,7 @@ function SidebarUser() {
           }
           to={""}
         >
-          my info
+          My Hote
         </NavLink>
 
         <NavLink
@@ -34,9 +33,9 @@ function SidebarUser() {
               ? " mx-auto w-[80%] text-InputBg text-2xl font-bebas px-10 py-3 rounded-full font-bold tracking-widest text-MainOrange border-4 border-MainOrange"
               : " mx-auto w-[80%] text-InputBg text-2xl font-bebas px-10 py-3 rounded-full font-bold tracking-widest hover:text-MainOrange hover:border-4 border-MainOrange"
           }
-          to={"myBooking"}
+          to={"confirmBooking"}
         >
-          My Booking
+          Confirm Booking
         </NavLink>
 
         <NavLink
@@ -45,31 +44,9 @@ function SidebarUser() {
               ? " mx-auto w-[80%] text-InputBg text-2xl font-bebas px-10 py-3 rounded-full font-bold tracking-widest text-MainOrange border-4 border-MainOrange"
               : " mx-auto w-[80%] text-InputBg text-2xl font-bebas px-10 py-3 rounded-full font-bold tracking-widest hover:text-MainOrange hover:border-4 border-MainOrange"
           }
-          to={"bookingHistory"}
+          to={"hostHistory"}
         >
-          Booking History
-        </NavLink>
-
-        <NavLink
-          className={({ isActive }) =>
-            isActive
-              ? " mx-auto w-[80%] text-InputBg text-2xl font-bebas px-10 py-3 rounded-full font-bold tracking-widest text-MainOrange border-4 border-MainOrange"
-              : " mx-auto w-[80%] text-InputBg text-2xl font-bebas px-10 py-3 rounded-full font-bold tracking-widest hover:text-MainOrange hover:border-4 border-MainOrange"
-          }
-          to={"waitForPayment"}
-        >
-          Wait for payment
-        </NavLink>
-
-        <NavLink
-          className={({ isActive }) =>
-            isActive
-              ? " mx-auto w-[80%] text-InputBg text-2xl font-bebas px-10 py-3 rounded-full font-bold tracking-widest text-MainOrange border-4 border-MainOrange"
-              : " mx-auto w-[80%] text-InputBg text-2xl font-bebas px-10 py-3 rounded-full font-bold tracking-widest hover:text-MainOrange hover:border-4 border-MainOrange"
-          }
-          to={"myTransactionHistory"}
-        >
-          Transaction history
+          History
         </NavLink>
       </div>
 
@@ -86,4 +63,4 @@ function SidebarUser() {
   );
 }
 
-export default SidebarUser;
+export default SidebarHost;

@@ -12,6 +12,11 @@ import PersonalInfo from "../pages/user/PersonalInfo";
 import MyBooking from "../pages/user/MyBooking";
 import BookingHistory from "../pages/user/BookingHistory";
 import WaitForPayment from "../pages/user/WaitForPayment";
+import MyTransactionHistory from "../pages/user/MyTransactionHistory";
+import MyHote from "../pages/host/MyHote";
+import ConfirmBooking from "../pages/host/ConfirmBooking";
+import HostHistory from "../pages/host/HostHistory";
+import HostInfoLayout from "../layouts/host-layout/HostInfoLayout";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +55,29 @@ const router = createBrowserRouter([
       {
         path: "waitForPayment",
         element: <WaitForPayment />,
+      },
+      {
+        path: "myTransactionHistory",
+        element: <MyTransactionHistory />,
+      },
+    ],
+  },
+
+  {
+    path: "/host",
+    element: <HostInfoLayout />,
+    children: [
+      {
+        index: true,
+        element: <MyHote />,
+      },
+      {
+        path: "confirmBooking",
+        element: <ConfirmBooking />,
+      },
+      {
+        path: "hostHistory",
+        element: <HostHistory />,
       },
     ],
   },

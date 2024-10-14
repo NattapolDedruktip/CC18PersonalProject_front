@@ -1,17 +1,17 @@
-import MyBookingItem from "@/src/components/MyBookingItem";
+import HostHistoryItem from "@/src/components/HostHistoryItem";
 import React from "react";
 
-function MyBooking() {
+function HostHistory() {
   return (
     <div className=" bg-MyBg w-full h-auto flex  flex-col ">
       <p className="flex justify-start text-body text-4xl font-bold text-MainOrange ml-40">
         My Booking
       </p>
-      <MyBookingItem />
-      <MyBookingItem />
-      <MyBookingItem />
+      <HostHistoryItem />
+      <HostHistoryItem />
+      <HostHistoryItem />
     </div>
   );
 }
 
-export default MyBooking;
+export default HostHistory;

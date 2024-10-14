@@ -1,7 +1,7 @@
 import React from "react";
 
 function WaitForPayment() {
-  return <div>WaitForPayment</div>;
+  return <div>w8forPayment</div>;
 }
 
 export default WaitForPayment;
