@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 function UserMapLayout() {
   return (
-    <div>
+    <div className="z-20">
       <UserHeader />
       <div>
         <Outlet />
