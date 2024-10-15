@@ -17,7 +17,8 @@ import MyHote from "../pages/host/MyHote";
 import ConfirmBooking from "../pages/host/ConfirmBooking";
 import HostHistory from "../pages/host/HostHistory";
 import HostInfoLayout from "../layouts/host-layout/HostInfoLayout";
-import HostEdit from "../components/HostEdit";
+import UserHotelDetail from "../components/UserHotelDetail";
+import HostHotelDetailEdit from "../components/HostHotelDetailEdit";
 
 const router = createBrowserRouter([
   {
@@ -34,7 +35,13 @@ const router = createBrowserRouter([
   {
     path: "/user/search",
     element: <UserMapLayout />,
-    children: [{ index: true, element: <MapSearch /> }],
+    children: [
+      { index: true, element: <MapSearch /> },
+      {
+        path: ":id",
+        element: <UserHotelDetail />,
+      },
+    ],
   },
 
   {
@@ -82,7 +89,7 @@ const router = createBrowserRouter([
       },
       {
         path: ":id",
-        element: <HostEdit />,
+        element: <HostHotelDetailEdit />,
       },
     ],
   },

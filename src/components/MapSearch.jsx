@@ -9,7 +9,7 @@ function MapSearch() {
         <MapSearchSidebar />
       </div>
 
-      <div className="-z-10 mt-[11vh] w-3/5 justify-center text-center">
+      <div className="z-10 mt-[11vh] w-3/5 justify-center text-center">
         <Map />
       </div>
     </div>
