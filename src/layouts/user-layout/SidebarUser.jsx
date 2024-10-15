@@ -14,8 +14,8 @@ function SidebarUser() {
   };
 
   return (
-    <div className="flex flex-col justify-between h-[90vh]">
-      <div className="flex flex-col justify-around flex-1 ">
+    <div className="fixed flex flex-col justify-around h-[100vh] bg-MyBg">
+      <div className="mt-3 flex flex-col justify-around flex-1 ">
         <NavLink
           end
           className={({ isActive }) =>
@@ -50,7 +50,7 @@ function SidebarUser() {
           Booking History
         </NavLink>
 
-        <NavLink
+        {/* <NavLink
           className={({ isActive }) =>
             isActive
               ? " mx-auto w-[80%] text-InputBg text-2xl font-bebas px-10 py-3 rounded-full font-bold tracking-widest text-MainOrange border-4 border-MainOrange"
@@ -70,13 +70,12 @@ function SidebarUser() {
           to={"myTransactionHistory"}
         >
           Transaction history
-        </NavLink>
+        </NavLink> */}
       </div>
-
       <div className="text-center">
         <button
           onClick={hdlLogout}
-          className="flex gap-1 mx-auto border-4 my-3 border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-10 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition"
+          className=" flex gap-1 mx-auto border-4 my-3 border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-10 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition"
         >
           <LogOut size={36} />
           LOG OUT

@@ -17,6 +17,7 @@ import MyHote from "../pages/host/MyHote";
 import ConfirmBooking from "../pages/host/ConfirmBooking";
 import HostHistory from "../pages/host/HostHistory";
 import HostInfoLayout from "../layouts/host-layout/HostInfoLayout";
+import HostEdit from "../components/HostEdit";
 
 const router = createBrowserRouter([
   {
@@ -78,6 +79,10 @@ const router = createBrowserRouter([
       {
         path: "hostHistory",
         element: <HostHistory />,
+      },
+      {
+        path: ":id",
+        element: <HostEdit />,
       },
     ],
   },

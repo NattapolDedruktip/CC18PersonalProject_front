@@ -6,7 +6,7 @@ import EditUserPersonalInfo from "@/src/components/EditUserPersonalInfo";
 
 function PersonalInfo() {
   return (
-    <div className=" bg-MyBg w-full h-[90vh] flex justify-center items-center text-white">
+    <div className=" bg-MyBg w-full h-[100vh] flex justify-center items-center text-white">
       <div className="flex flex-col gap-6 justify-center items-center w-2/5 h-full">
         <div className=" outline outline-8 outline-MainOrange  bg-white w-[70%] rounded-full overflow-hidden ">
           <Avatar>

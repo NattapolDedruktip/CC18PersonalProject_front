@@ -27,7 +27,7 @@ function EditUserPersonalInfo() {
     <Dialog>
       <DialogTrigger asChild>
         <Button
-          className="border-4 bg-MyBg border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-7 py-6 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition"
+          className=" border-4 bg-MyBg border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-7 py-6 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition"
           variant="outline"
         >
           EDIT PROFILE

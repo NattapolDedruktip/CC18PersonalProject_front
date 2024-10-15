@@ -13,7 +13,7 @@ function SidebarHost() {
     navigate("/");
   };
   return (
-    <div className="flex flex-col justify-between h-[90vh]">
+    <div className="z-10 fixed mt-[8vh] bg-MyBg flex flex-col justify-between h-[100vh]">
       <div className="flex flex-col justify-around flex-1 ">
         <NavLink
           end
@@ -48,16 +48,16 @@ function SidebarHost() {
         >
           History
         </NavLink>
-      </div>
 
-      <div className="text-center">
-        <button
-          onClick={hdlLogout}
-          className="flex gap-1 mx-auto border-4 my-3 border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-10 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition"
-        >
-          <LogOut size={36} />
-          LOG OUT
-        </button>
+        <div className="text-center">
+          <button
+            onClick={hdlLogout}
+            className="flex gap-1 mx-auto border-4 my-3 border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-10 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition"
+          >
+            <LogOut size={36} />
+            LOG OUT
+          </button>
+        </div>
       </div>
     </div>
   );

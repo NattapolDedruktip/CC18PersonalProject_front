@@ -5,16 +5,18 @@ import HotelRoomPics from "@/src/components/HotelRoomPics";
 
 function BookingHistoryItem() {
   return (
-    <div>
-      <div className="flex mx-auto w-[90%] mt-10 h-[40vh]  justify-around items-center">
-        <div className="flex-1">
-          <HotelRoomPics />
-        </div>
-        <div className="flex-1">
-          <HotelBookingDetail />
-        </div>
-        <div className="flex-1">
-          <HotelPaidHistory />
+    <div className="border-4 border-MainOrange p-2 rounded-lg">
+      <div className=" p-2 rounded-lg">
+        <div className="flex mx-auto w-[90%]  h-[40vh]  justify-around items-center">
+          <div className="flex-1">
+            <HotelRoomPics />
+          </div>
+          <div className="ml-20 flex-1">
+            <HotelBookingDetail />
+          </div>
+          <div className="flex-1">
+            <HotelPaidHistory />
+          </div>
         </div>
       </div>
     </div>
