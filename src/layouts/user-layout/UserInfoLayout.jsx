@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 
 function UserInfoLayout() {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-MyBg">
       <div>
         <UserHeader />
       </div>

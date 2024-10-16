@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useAuthStore from "../stores/auth-store";
 import { useNavigate } from "react-router-dom";
 import { AiFillCaretDown } from "react-icons/ai";
@@ -11,27 +11,36 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { getAllUserInfo } from "../api/auth";
 
 function HeaderAvatar() {
+  const [userData, setUserData] = useState({});
+
   const navigate = useNavigate();
   const actionLogout = useAuthStore((state) => state.actionLogout);
   const user = useAuthStore((state) => state.user);
+  const token = useAuthStore((state) => state.token);
 
+  useEffect(() => {
+    getAllUserInfo(token).then((result) => {
+      setUserData(result.data.user);
+    });
+  }, []);
   const hdlLogout = () => {
     actionLogout();
     navigate("/");
   };
   return (
-    <div className="flex gap-4">
-      <div className="flex justify-center items-center text-4xl text-bebas font-bold text-MainOrange">
-        user name
+    <div className="flex gap-4 ">
+      <div className="flex justify-center items-center text-4xl text-bebas font-bold text-InputBg ">
+        {user.role} : {userData.firstName} {userData.lastName}
       </div>
       <DropdownMenu>
         <DropdownMenuTrigger>
           <div className="h-[104px] flex border-red-100">
             <div className="flex items-center">
               <Avatar className="w-20 h-20 bg-blue-50">
-                <AvatarImage src={cat} />
+                <AvatarImage src={userData.image || cat} />
                 <AvatarFallback>{"User's Profile"}</AvatarFallback>
               </Avatar>
             </div>

@@ -66,6 +66,7 @@ function Map() {
       map.locate().on("locationfound", (e) => {
         map.flyTo(e.latlng, 16);
         setMyLocation(e.latlng);
+        console.log(e.latlng);
       });
     }, []);
     return myLocation === null ? null : (

@@ -5,11 +5,11 @@ import { Outlet } from "react-router-dom";
 
 function HostInfoLayout() {
   return (
-    <div className="flex flex-col">
-      <div>
+    <div className="flex flex-col bg-MyBg z-20">
+      <div className="bg-MyBg">
         <HostHeader />
       </div>
-      <div className="flex">
+      <div className="flex bg-MyBg">
         <div className=" bg-MyBg w-1/6 justify-center text-center h-[90vh]">
           <SidebarHost />
         </div>

@@ -6,9 +6,9 @@ import Map from "./Map";
 
 function HostHotelDetailEdit() {
   return (
-    <div className="flex flex-col bg-MyBg">
+    <div className="flex flex-col bg-MyBg ">
       <div className="h-[10vh] bg-MyBg">header</div>
-      <div className="h-[100vh] bg-MyBg flex ">
+      <div className="h-fit bg-MyBg flex ">
         <div className="w-full bg-MyBg h-fit flex justify-center items-center ">
           {/* real-component here */}
           <div className="h-fit  bg-MyBg flex flex-col justify-center items-center">
@@ -60,11 +60,17 @@ function HostHotelDetailEdit() {
                 </button>
               </div>
 
-              <div>
+              <div className="bg-MyBg z-10">
                 <Map />
-                <button className="border-4 border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-10 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition">
-                  Pin your Hote
-                </button>
+                <div className="flex gap-10 justify-center">
+                  <button className="border-4 border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-10 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition">
+                    Pin your Hote
+                  </button>
+
+                  <button className="border-4 border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-10 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition">
+                    SAVE CHANGE
+                  </button>
+                </div>
               </div>
             </div>
           </div>

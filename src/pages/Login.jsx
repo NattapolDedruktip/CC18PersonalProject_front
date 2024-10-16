@@ -9,7 +9,7 @@ function Login() {
   const [formError, setFormError] = useState({});
 
   const [form, setForm] = useState({
-    email: "anddy@gamil.com",
+    email: "anddy@gmail.com",
     password: "123456",
   });
 
@@ -49,7 +49,7 @@ function Login() {
     const role = resp.data.payload.role;
 
     if (role === "HOST") {
-      navigate("/admin");
+      navigate("/host");
     } else {
       navigate("/user/search");
     }

@@ -19,6 +19,8 @@ import HostHistory from "../pages/host/HostHistory";
 import HostInfoLayout from "../layouts/host-layout/HostInfoLayout";
 import UserHotelDetail from "../components/UserHotelDetail";
 import HostHotelDetailEdit from "../components/HostHotelDetailEdit";
+import ProtectRouterUser from "./protectRouterUser";
+import ProtectRouterHost from "./ProtectRouterHost";
 
 const router = createBrowserRouter([
   {
@@ -34,7 +36,8 @@ const router = createBrowserRouter([
 
   {
     path: "/user/search",
-    element: <UserMapLayout />,
+    // element: <UserMapLayout />,
+    element: <ProtectRouterUser element={<UserMapLayout />} />,
     children: [
       { index: true, element: <MapSearch /> },
       {
@@ -46,7 +49,7 @@ const router = createBrowserRouter([
 
   {
     path: "/userInfo",
-    element: <UserInfoLayout />,
+    element: <ProtectRouterUser element={<UserInfoLayout />} />,
     children: [
       {
         index: true,
@@ -73,7 +76,7 @@ const router = createBrowserRouter([
 
   {
     path: "/host",
-    element: <HostInfoLayout />,
+    element: <ProtectRouterHost element={<HostInfoLayout />} />,
     children: [
       {
         index: true,
@@ -88,7 +91,7 @@ const router = createBrowserRouter([
         element: <HostHistory />,
       },
       {
-        path: ":id",
+        path: "hote/:id",
         element: <HostHotelDetailEdit />,
       },
     ],
