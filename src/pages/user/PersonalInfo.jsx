@@ -1,5 +1,5 @@
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import cat from "../../assets/cat.svg";
 import { AvatarFallback } from "@/components/ui/avatar";
 import EditUserPersonalInfo from "@/src/components/EditUserPersonalInfo";
@@ -23,9 +23,23 @@ function PersonalInfo() {
     });
   }, []);
 
+  //upload profile pic
+  const fileInputRef = useRef(null);
+
+  const hdlUploadPic = () => {
+    fileInputRef.current.click();
+  };
+
+  const hdlPicChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      console.log("select file : ", file.name);
+    }
+  };
+
   return (
     <div className=" mt-[11vh] bg-MyBg w-full h-[90vh] flex justify-center items-center text-white ">
-      <div className="ml-60 flex flex-col gap-6 justify-center items-center w-2/5 h-fit ">
+      <div className="ml-60 flex flex-col gap-6 justify-center items-center w-2/5 h-fit  ">
         <div className=" outline outline-8 outline-MainOrange  bg-white w-[70%] rounded-full overflow-hidden ">
           <Avatar>
             <AvatarImage src={userData?.image || cat} />
@@ -33,12 +47,24 @@ function PersonalInfo() {
           </Avatar>
         </div>
         <div className="flex gap-6">
-          <button className="border-4 bg-MyBg border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-3 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition">
+          {/* upload button */}
+          <button
+            onClick={hdlUploadPic}
+            className="border-4 bg-MyBg border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-3 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition"
+          >
             Upload
           </button>
+          {/* Delete button */}
           <button className="border-4 bg-MyBg border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-3 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition">
             Delete
           </button>
+          {/* input upload file */}
+          <input
+            ref={fileInputRef}
+            onChange={hdlPicChange}
+            className="hidden"
+            type="file"
+          />
         </div>
       </div>
       <div className="flex  flex-col  justify-around items-center w-3/5 h-full">
