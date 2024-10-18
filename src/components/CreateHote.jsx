@@ -15,8 +15,9 @@ import { Textarea } from "@/components/ui/textarea";
 import useAuthStore from "../stores/auth-store";
 import { createHote } from "../api/host";
 import { toast } from "react-toastify";
+import useHostStore from "../stores/host-store";
 
-function CreateHote({ setHoteList, actionHostGetAllHote, hoteList }) {
+function CreateHote() {
   const token = useAuthStore((state) => state.token);
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -25,6 +26,11 @@ function CreateHote({ setHoteList, actionHostGetAllHote, hoteList }) {
     address: "",
     description: "",
   });
+
+  const hoteList = useHostStore((state) => state.hoteList);
+  const actionHostGetAllHote = useHostStore(
+    (state) => state.actionHostGetAllHote
+  );
 
   // Reset form data when dialog is opened
   const resetForm = () => {
@@ -45,13 +51,13 @@ function CreateHote({ setHoteList, actionHostGetAllHote, hoteList }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    createHote(token, formData);
+    console.log("hdlSubmit");
+    await createHote(token, formData);
     toast.success("Create Hote Successfully!!");
+    await actionHostGetAllHote(token);
     setIsOpen(false); // Close the dialog after saving
-    await actionHostGetAllHote(token).then((data) => setHoteList(data));
   };
-  console.log(hoteList);
+  // console.log(hoteList);
   return (
     <Dialog
       open={isOpen}

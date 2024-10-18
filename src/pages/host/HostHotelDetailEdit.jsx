@@ -1,14 +1,19 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import HotelRoomPics from "../../components/HotelRoomPics";
 import UserHotelDescription from "../../components/UserHotelDescription";
 import UserHotelAvailableTime from "../../components/UserHotelAvailableTime";
 import Map from "../../components/Map";
 import useAuthStore from "@/src/stores/auth-store";
 import HostUploadHotelPicButton from "@/src/components/HostUploadHotelPicButton";
+import { useParams } from "react-router-dom";
+import { getHoteInfo } from "@/src/api/host";
 
 function HostHotelDetailEdit() {
+  const { id } = useParams();
+  // console.log("EDITTTTT", id);
   const user = useAuthStore((state) => state.user);
   const token = useAuthStore((state) => state.token);
+  const [hoteData, setHoteData] = useState();
 
   const [hoteImages, setHoteImages] = useState({
     url: "",
@@ -25,6 +30,16 @@ function HostHotelDetailEdit() {
     }
   };
 
+  const getHoteInfoById = async (token, hoteId) => {
+    const resp = await getHoteInfo(token, hoteId);
+    // console.log(">>>>>>>>>>>>>>>>>>>>", resp.data);
+    setHoteData(resp.data);
+  };
+
+  useEffect(() => {
+    getHoteInfoById(token, id);
+  }, []);
+
   return (
     <div className="flex flex-col bg-MyBg ">
       <div className="h-[10vh] bg-MyBg">header</div>
@@ -40,7 +55,7 @@ function HostHotelDetailEdit() {
 
               <div className="flex flex-1 ">
                 <div className="flex-1  flex flex-col gap-5 justify-center items-center">
-                  <HotelRoomPics />
+                  <HotelRoomPics item={hoteData} />
                   <div className="flex gap-4">
                     {/* upload pic */}
                     <button
@@ -52,6 +67,8 @@ function HostHotelDetailEdit() {
                         hoteImages={hoteImages}
                         setHoteImages={setHoteImages}
                         inputRef={inputFileRef}
+                        getHoteInfoById={getHoteInfoById}
+                        hoteId={id}
                       />
                     </button>
 

@@ -13,32 +13,22 @@ import dog1 from "../assets/dog.png";
 import dog2 from "../assets/dog2.png";
 import dog4 from "../assets/dog4.png";
 
-function HotelRoomPics() {
+function HotelRoomPics({ item }) {
+  console.log("=================", item);
   return (
     <Carousel className="w-full max-w-sm mx-16">
       <CarouselContent>
-        <CarouselItem>
-          <img
-            src={dog1}
-            className="p-1 aspect-square items-center border-4 border-MainOrange"
-          />
-        </CarouselItem>
-        <CarouselItem>
-          <div className="p-1 ">
-            <img
-              src={dog2}
-              className="p-1 aspect-square items-center border-4 border-MainOrange"
-            />
-          </div>
-        </CarouselItem>
-        <CarouselItem>
-          <div className="p-1 ">
-            <img
-              src={dog4}
-              className="p-1 aspect-square items-center border-4 border-MainOrange"
-            />
-          </div>
-        </CarouselItem>
+        {item?.hotelImages?.map((image) => {
+          console.log(image);
+          return (
+            <CarouselItem>
+              <img
+                src={image.secure_url}
+                className="w-full h-full p-1 aspect-square items-center border-4 border-MainOrange"
+              />
+            </CarouselItem>
+          );
+        })}
       </CarouselContent>
       <CarouselPrevious className="border-4  border-MainOrange text-InputBg bg-MyBg  hover:bg-MainOrange hover:text-InputText transition" />
       <CarouselNext className="border-4 border-MainOrange text-InputBg bg-MyBg  hover:bg-MainOrange hover:text-InputText transition" />

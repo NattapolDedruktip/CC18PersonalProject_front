@@ -8,9 +8,9 @@ export const createHote = async (token, form) => {
   });
 };
 
-export const getAllHote = async (token) => {
-  console.log(token);
-  return await axios.get(
+export const getAllHote = (token) => {
+  // console.log(token);
+  return axios.get(
     "http://localhost:8000/host/getAllHote",
 
     {
@@ -19,4 +19,13 @@ export const getAllHote = async (token) => {
       },
     }
   );
+};
+
+export const getHoteInfo = async (token, hoteId) => {
+  console.log(hoteId, "0000000000");
+  return await axios.get("http://localhost:8000/host/getHoteInfo/" + hoteId, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 };

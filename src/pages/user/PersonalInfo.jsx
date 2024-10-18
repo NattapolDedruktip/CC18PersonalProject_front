@@ -12,12 +12,7 @@ import { uploadProfile } from "@/src/api/userImage";
 function PersonalInfo() {
   const [userData, setUserData] = useState({});
   const [isLoading, setIsloading] = useState(false);
-  const [userImageForm, setUserImageForm] = useState({
-    url: "",
-    asset_id: "",
-    public_id: "",
-    secure_url: "",
-  });
+
   const user = useAuthStore((state) => state.user);
   const token = useAuthStore((state) => state.token);
 
@@ -32,12 +27,6 @@ function PersonalInfo() {
       // 2   use .then
     });
   }, []);
-
-  useEffect(() => {
-    if (userImageForm.url) {
-      console.log("Image form updated:", userImageForm);
-    }
-  }, [userImageForm]);
 
   // upload profile pic
   const fileInputRef = useRef(null);
@@ -72,12 +61,7 @@ function PersonalInfo() {
         uploadProfile(token, data)
           .then((resp) => {
             console.log(resp);
-            setUserImageForm({
-              url: resp.data.url,
-              asset_id: resp.data.asset_id,
-              public_id: resp.data.public_id,
-              secure_url: resp.data.secure_url,
-            });
+
             toast.success("Upload Profile Success!");
           })
           .catch((err) => {
@@ -87,13 +71,13 @@ function PersonalInfo() {
       "base64"
     );
   };
-
+  console.log(userData);
   return (
     <div className=" mt-[11vh] bg-MyBg w-full h-[90vh] flex justify-center items-center text-white ">
       <div className="ml-60 flex flex-col gap-6 justify-center items-center w-2/5 h-fit  ">
         <div className=" outline outline-8 outline-MainOrange  bg-white w-[70%] rounded-full overflow-hidden ">
           <Avatar>
-            <AvatarImage src={userData?.image || cat} />
+            <AvatarImage src={userData?.userImage || cat} />
             <AvatarFallback>{`${userData.firstName}   ${userData.lastName}`}</AvatarFallback>
           </Avatar>
         </div>

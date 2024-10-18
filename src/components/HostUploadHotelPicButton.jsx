@@ -3,12 +3,19 @@ import { toast } from "react-toastify";
 import Resize from "react-image-file-resizer";
 import { uploadHotelPics } from "../api/hostImage";
 import useAuthStore from "../stores/auth-store";
+import { useParams } from "react-router-dom";
 
-function HostUploadHotelPicButton({ inputRef, hoteImages, setHoteImages }) {
+function HostUploadHotelPicButton({
+  inputRef,
+  hoteImages,
+  setHoteImages,
+  getHoteInfoById,
+  hoteId,
+}) {
   const [isLoading, setIsloading] = useState(false);
+  const { id } = useParams();
 
   const token = useAuthStore((state) => state.token);
-
   useEffect(() => {
     if (hoteImages.url) {
       console.log("hote images updated:", hoteImages);
@@ -40,19 +47,16 @@ function HostUploadHotelPicButton({ inputRef, hoteImages, setHoteImages }) {
           100,
           0,
           (data) => {
+            const body = {
+              id: id,
+              data: data,
+            };
             //endpoint  : how to change url along with hoteId
-            console.log("data", data);
-            uploadHotelPics(token, data)
+            // console.log("data", data);
+            uploadHotelPics(token, body)
               .then((resp) => {
                 console.log(resp);
-                setHoteImages({
-                  url: resp.data.url,
-                  asset_id: resp.data.asset_id,
-                  public_id: resp.data.public_id,
-                  secure_url: resp.data.secure_url,
-                });
-                allFiles.push(resp.data);
-                toast.success("Upload image successfully!");
+                getHoteInfoById(token, hoteId);
               })
               .catch((err) => {
                 console.log(err);
@@ -61,7 +65,6 @@ function HostUploadHotelPicButton({ inputRef, hoteImages, setHoteImages }) {
           "base64"
         );
       }
-      console.log(allFiles, "00000000000000000000");
     }
   };
 

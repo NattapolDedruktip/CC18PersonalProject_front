@@ -28,7 +28,7 @@ function Map() {
     const [form, setForm] = useState({ lat: null, lng: null });
     useMapEvents({
       click: (e) => {
-        console.log(e.latlng);
+        // console.log(e.latlng);
         setPosition(e.latlng);
         setForm({
           ...form,
@@ -66,7 +66,8 @@ function Map() {
       map.locate().on("locationfound", (e) => {
         map.flyTo(e.latlng, 16);
         setMyLocation(e.latlng);
-        console.log(e.latlng);
+        // map log
+        // console.log(e.latlng);
       });
     }, []);
     return myLocation === null ? null : (
