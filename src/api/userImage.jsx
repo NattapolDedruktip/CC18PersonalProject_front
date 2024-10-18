@@ -15,3 +15,15 @@ export const uploadProfile = async (token, form) => {
     }
   );
 };
+
+export const deleteProfile = async (token, publicId) => {
+  return await axios.post(
+    "http://localhost:8000/user/removeProfileImage",
+    { publicId },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};

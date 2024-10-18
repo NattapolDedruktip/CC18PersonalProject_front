@@ -7,7 +7,7 @@ import useAuthStore from "@/src/stores/auth-store";
 import { getAllUserInfo } from "@/src/api/auth";
 import { toast } from "react-toastify";
 import Resize from "react-image-file-resizer";
-import { uploadProfile } from "@/src/api/userImage";
+import { deleteProfile, uploadProfile } from "@/src/api/userImage";
 
 function PersonalInfo() {
   const [userData, setUserData] = useState({});
@@ -39,7 +39,7 @@ function PersonalInfo() {
     // console.log("change");
     const file = e.target.files[0];
     if (file) {
-      console.log("select file : ", file);
+      // console.log("select file : ", file);
       setIsloading(true);
     }
 
@@ -55,23 +55,37 @@ function PersonalInfo() {
       "JPEG",
       100,
       0,
-      (data) => {
+      async (data) => {
         //endpoint
 
-        uploadProfile(token, data)
+        await uploadProfile(token, data)
           .then((resp) => {
-            console.log(resp);
+            // console.log(resp);
 
             toast.success("Upload Profile Success!");
           })
           .catch((err) => {
             console.log(err);
           });
+
+        await getAllUserInfo(token).then((result) => {
+          // console.log(result);
+          setUserData(result.data.user);
+        });
       },
       "base64"
     );
   };
-  console.log(userData);
+
+  const onDelete = async (publicId) => {
+    console.log("delete", publicId);
+    await deleteProfile(token, publicId);
+    await getAllUserInfo(token).then((result) => {
+      console.log(result);
+      setUserData(result.data.user);
+    });
+  };
+  // console.log(userData);
   return (
     <div className=" mt-[11vh] bg-MyBg w-full h-[90vh] flex justify-center items-center text-white ">
       <div className="ml-60 flex flex-col gap-6 justify-center items-center w-2/5 h-fit  ">
@@ -97,7 +111,10 @@ function PersonalInfo() {
             />
           </button>
           {/* Delete button */}
-          <button className="border-4 bg-MyBg border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-3 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition">
+          <button
+            onClick={() => onDelete(userData.imagePublicId)}
+            className="border-4 bg-MyBg border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-3 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition"
+          >
             Delete
           </button>
           {/* input upload file */}

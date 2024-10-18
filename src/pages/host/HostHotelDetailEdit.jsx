@@ -10,10 +10,10 @@ import { getHoteInfo } from "@/src/api/host";
 
 function HostHotelDetailEdit() {
   const { id } = useParams();
-  // console.log("EDITTTTT", id);
   const user = useAuthStore((state) => state.user);
   const token = useAuthStore((state) => state.token);
   const [hoteData, setHoteData] = useState();
+  const [CarouselPublicId, setCarouselPublicId] = useState();
 
   const [hoteImages, setHoteImages] = useState({
     url: "",
@@ -90,12 +90,6 @@ function HostHotelDetailEdit() {
                   <div className="flex gap-2">
                     <button className="border-4 border-MainOrange text-MainOrange text-base font-bold font-bebas px-5 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition">
                       Add
-                    </button>
-                    <button className="border-4 border-MainOrange text-MainOrange text-base font-bold font-bebas px-5 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition">
-                      Update
-                    </button>
-                    <button className="border-4 border-MainOrange text-MainOrange text-base font-bold font-bebas px-5 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition">
-                      Delete
                     </button>
                   </div>
                 </div>

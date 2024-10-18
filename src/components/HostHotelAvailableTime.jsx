@@ -16,12 +16,6 @@ function HostHotelAvailableTime() {
         <button className="border-4 border-MainOrange text-MainOrange text-xl font-bold font-bebas w-[25%]  py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition">
           Add
         </button>
-        <button className="border-4 border-MainOrange text-MainOrange text-xl font-bold font-bebas w-[25%]  py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition">
-          Edit
-        </button>
-        <button className="border-4 border-MainOrange text-MainOrange text-xl font-bold font-bebas w-[25%]  py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition">
-          Delete
-        </button>
       </div>
     </div>
   );
