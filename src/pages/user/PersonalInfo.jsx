@@ -5,9 +5,19 @@ import { AvatarFallback } from "@/components/ui/avatar";
 import EditUserPersonalInfo from "@/src/components/EditUserPersonalInfo";
 import useAuthStore from "@/src/stores/auth-store";
 import { getAllUserInfo } from "@/src/api/auth";
+import { toast } from "react-toastify";
+import Resize from "react-image-file-resizer";
+import { uploadProfile } from "@/src/api/userImage";
 
 function PersonalInfo() {
   const [userData, setUserData] = useState({});
+  const [isLoading, setIsloading] = useState(false);
+  const [userImageForm, setUserImageForm] = useState({
+    url: "",
+    asset_id: "",
+    public_id: "",
+    secure_url: "",
+  });
   const user = useAuthStore((state) => state.user);
   const token = useAuthStore((state) => state.token);
 
@@ -23,7 +33,13 @@ function PersonalInfo() {
     });
   }, []);
 
-  //upload profile pic
+  useEffect(() => {
+    if (userImageForm.url) {
+      console.log("Image form updated:", userImageForm);
+    }
+  }, [userImageForm]);
+
+  // upload profile pic
   const fileInputRef = useRef(null);
 
   const hdlUploadPic = () => {
@@ -31,10 +47,45 @@ function PersonalInfo() {
   };
 
   const hdlPicChange = (e) => {
+    // console.log("change");
     const file = e.target.files[0];
     if (file) {
-      console.log("select file : ", file.name);
+      console.log("select file : ", file);
+      setIsloading(true);
     }
+
+    if (!file.type.startsWith("image/")) {
+      toast.error(`File ${file.name} is not PICTURE`);
+    }
+
+    //image resizer
+    Resize.imageFileResizer(
+      file,
+      720,
+      720,
+      "JPEG",
+      100,
+      0,
+      (data) => {
+        //endpoint
+
+        uploadProfile(token, data)
+          .then((resp) => {
+            console.log(resp);
+            setUserImageForm({
+              url: resp.data.url,
+              asset_id: resp.data.asset_id,
+              public_id: resp.data.public_id,
+              secure_url: resp.data.secure_url,
+            });
+            toast.success("Upload Profile Success!");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      },
+      "base64"
+    );
   };
 
   return (
@@ -50,21 +101,22 @@ function PersonalInfo() {
           {/* upload button */}
           <button
             onClick={hdlUploadPic}
-            className="border-4 bg-MyBg border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-3 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition"
+            className=" border-4 bg-MyBg border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-3 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition"
           >
             Upload
+            <input
+              ref={fileInputRef}
+              onChange={hdlPicChange}
+              className="hidden"
+              type="file"
+              // hidden
+            />
           </button>
           {/* Delete button */}
           <button className="border-4 bg-MyBg border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-3 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition">
             Delete
           </button>
           {/* input upload file */}
-          <input
-            ref={fileInputRef}
-            onChange={hdlPicChange}
-            className="hidden"
-            type="file"
-          />
         </div>
       </div>
       <div className="flex  flex-col  justify-around items-center w-3/5 h-full">

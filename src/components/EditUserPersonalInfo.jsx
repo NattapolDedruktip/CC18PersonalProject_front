@@ -20,14 +20,42 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 
-import React from "react";
+import React, { useState } from "react";
 
 function EditUserPersonalInfo() {
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    dateOfBirth: "",
+    gender: "",
+    paymentMethod: "",
+  });
+
+  const hdlOnChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const hdlSelectChange = (name, value) => {
+    setForm({
+      ...form,
+      [name]: value,
+    });
+  };
+
+  const hdlEditProfile = (e) => {
+    e.preventDefault();
+    console.log(form);
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button
-          className=" border-4 bg-MyBg border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-7 py-6 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition"
+          className="border-4 bg-MyBg border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-7 py-6 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition"
           variant="outline"
         >
           EDIT PROFILE
@@ -37,53 +65,78 @@ function EditUserPersonalInfo() {
         <DialogHeader>
           <DialogTitle>EDIT PROFILE</DialogTitle>
           <DialogDescription>
-            Make change to your profile here . Click save when you done.
+            Make changes to your profile here. Click save when you're done.
           </DialogDescription>
           <div className="grid gap-4 py-4">
-            <div className=" grid grid-cols-4 items-center gap-4">
-              <Label htmlfor="firstName" className="text-right">
-                FIRST NAME :
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="firstName" className="text-right">
+                FIRST NAME:
               </Label>
               <Input
                 id="firstName"
-                value="user's firstName"
+                name="firstName"
+                value={form.firstName}
+                onChange={hdlOnChange}
+                placeholder="Fill your first name"
                 className="col-span-3"
               />
             </div>
-            <div className=" grid grid-cols-4 items-center gap-4">
-              <Label htmlfor="LastName" className="text-right">
-                Last Name :
-              </Label>
-              <Input id="LastName" value="ded" className="col-span-3" />
-            </div>
-            <div className=" grid grid-cols-4 items-center gap-4">
-              <Label htmlfor="email" className="text-right">
-                Email :
-              </Label>
-              <Input id="email" value="user's email" className="col-span-3" />
-            </div>
-            <div className=" grid grid-cols-4 items-center gap-4">
-              <Label htmlfor="dateOfBirth" className="text-right">
-                Date of Birth (YYYY/MM/DD)
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="lastName" className="text-right">
+                LAST NAME:
               </Label>
               <Input
-                id="dateOfBirth"
-                value="user's birth date"
+                id="lastName"
+                name="lastName"
+                value={form.lastName}
+                onChange={hdlOnChange}
+                placeholder="Fill your last name"
                 className="col-span-3"
               />
             </div>
-            <div className=" grid grid-cols-4 items-center gap-4">
-              <Label htmlfor="gender" className="text-right">
-                Gender :
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="email" className="text-right">
+                Email:
+              </Label>
+              <Input
+                placeholder="Fill your Email"
+                id="email"
+                type="email"
+                value={form.email}
+                name="email"
+                onChange={hdlOnChange}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="dateOfBirth" className="text-right">
+                Date of Birth (YYYY/MM/DD):
+              </Label>
+              <Input
+                placeholder="YYYY/MM/DD"
+                id="dateOfBirth"
+                name="dateOfBirth"
+                onChange={hdlOnChange}
+                value={form.dateOfBirth}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="gender" className="text-right">
+                Gender:
               </Label>
               <div>
-                <Select>
+                <Select
+                  name="gender"
+                  value={form.gender}
+                  onValueChange={(value) => hdlSelectChange("gender", value)}
+                >
                   <SelectTrigger className="w-[340px]">
                     <SelectValue placeholder="Select gender" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectLabel>gender</SelectLabel>
+                      <SelectLabel>Gender</SelectLabel>
                       <SelectItem value="MALE">MALE</SelectItem>
                       <SelectItem value="FEMALE">FEMALE</SelectItem>
                       <SelectItem value="ETC">ETC</SelectItem>
@@ -92,21 +145,27 @@ function EditUserPersonalInfo() {
                 </Select>
               </div>
             </div>
-            <div className=" grid grid-cols-4 items-center gap-4">
-              <Label htmlfor="paymentMethod" className="text-right">
-                Payment Method :
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="paymentMethod" className="text-right">
+                Payment Method:
               </Label>
               <div>
-                <Select>
+                <Select
+                  name="paymentMethod"
+                  value={form.paymentMethod}
+                  onValueChange={(value) =>
+                    hdlSelectChange("paymentMethod", value)
+                  }
+                >
                   <SelectTrigger className="w-[340px]">
                     <SelectValue placeholder="Select payment method" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectLabel>payment method</SelectLabel>
+                      <SelectLabel>Payment Method</SelectLabel>
                       <SelectItem value="CASH">CASH</SelectItem>
-                      <SelectItem disable value="CREDIT">
-                        CREDIT(Not available)
+                      <SelectItem disabled value="CREDIT">
+                        CREDIT (Not available)
                       </SelectItem>
                     </SelectGroup>
                   </SelectContent>
@@ -115,7 +174,9 @@ function EditUserPersonalInfo() {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit">Save Change</Button>
+            <Button type="submit" onClick={hdlEditProfile}>
+              Save Changes
+            </Button>
           </DialogFooter>
         </DialogHeader>
       </DialogContent>

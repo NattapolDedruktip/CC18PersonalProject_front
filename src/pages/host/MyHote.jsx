@@ -1,18 +1,43 @@
+import CreateHote from "@/src/components/CreateHote";
 import HostMyHoteItem from "@/src/components/HostMyhoteItem";
-import React from "react";
+import useAuthStore from "@/src/stores/auth-store";
+import React, { useState, useEffect } from "react";
 
 function MyHote() {
+  const [hoteList, setHoteList] = useState([]);
+  const token = useAuthStore((state) => state.token);
+  const actionHostGetAllHote = useAuthStore(
+    (state) => state.actionHostGetAllHote
+  );
+
+  useEffect(() => {
+    console.log(token);
+    actionHostGetAllHote(token).then((data) => setHoteList(data));
+    console.log(">>>>>>>>>>>>>>>>");
+  }, []);
+
+  console.log("hoteList", hoteList);
   return (
     <div className=" mt-[11vh] px-10 bg-MyBg w-full h-auto flex  flex-col gap-5">
       <p className="flex justify-start text-body text-4xl font-bold text-MainOrange ml-40">
         My Hote
       </p>
-      <HostMyHoteItem />
-      <HostMyHoteItem />
+      {hoteList.map((item) => (
+        <HostMyHoteItem
+          key={item.id}
+          id={item.id}
+          address={item.address}
+          description={item.description}
+          hostContact={item.hostContact}
+          userId={item.userId}
+        />
+      ))}
       <div className="text-center">
-        <button className=" border-4 border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-10 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition">
-          CREATE NEW HOTE +
-        </button>
+        <CreateHote
+          hoteList={hoteList}
+          setHoteList={setHoteList}
+          actionHostGetAllHote={actionHostGetAllHote}
+        />
       </div>
     </div>
   );

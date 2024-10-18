@@ -13,7 +13,7 @@ function HostInfoLayout() {
         <div className=" bg-MyBg w-1/6 justify-center text-center h-[90vh]">
           <SidebarHost />
         </div>
-        <div className=" bg-MyBg w-5/6 justify-center text-center">
+        <div className=" bg-MyBg w-5/6 h-screen justify-center text-center">
           <Outlet />
         </div>
       </div>

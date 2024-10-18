@@ -1,10 +1,30 @@
-import React from "react";
-import HotelRoomPics from "./HotelRoomPics";
-import UserHotelDescription from "./UserHotelDescription";
-import UserHotelAvailableTime from "./UserHotelAvailableTime";
-import Map from "./Map";
+import React, { useRef, useState } from "react";
+import HotelRoomPics from "../../components/HotelRoomPics";
+import UserHotelDescription from "../../components/UserHotelDescription";
+import UserHotelAvailableTime from "../../components/UserHotelAvailableTime";
+import Map from "../../components/Map";
+import useAuthStore from "@/src/stores/auth-store";
+import HostUploadHotelPicButton from "@/src/components/HostUploadHotelPicButton";
 
 function HostHotelDetailEdit() {
+  const user = useAuthStore((state) => state.user);
+  const token = useAuthStore((state) => state.token);
+
+  const [hoteImages, setHoteImages] = useState({
+    url: "",
+    asset_id: "",
+    public_id: "",
+    secure_url: "",
+  });
+
+  const inputFileRef = useRef(null);
+
+  const hdlUploadClick = () => {
+    if (inputFileRef.current) {
+      inputFileRef.current.click();
+    }
+  };
+
   return (
     <div className="flex flex-col bg-MyBg ">
       <div className="h-[10vh] bg-MyBg">header</div>
@@ -17,18 +37,30 @@ function HostHotelDetailEdit() {
               <div className="mx-auto text-7xl font-body font-bold text-MainOrange h-[10%] flex items-center ">
                 Hotel Name
               </div>
+
               <div className="flex flex-1 ">
                 <div className="flex-1  flex flex-col gap-5 justify-center items-center">
                   <HotelRoomPics />
                   <div className="flex gap-4">
-                    <button className="border-4 border-MainOrange text-MainOrange text-base font-bold font-bebas px-5 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition">
+                    {/* upload pic */}
+                    <button
+                      onClick={hdlUploadClick}
+                      className="border-4 border-MainOrange text-MainOrange text-base font-bold font-bebas px-5 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition"
+                    >
                       Upload
+                      <HostUploadHotelPicButton
+                        hoteImages={hoteImages}
+                        setHoteImages={setHoteImages}
+                        inputRef={inputFileRef}
+                      />
                     </button>
+
                     <button className="border-4 border-MainOrange text-MainOrange text-base font-bold font-bebas px-5 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition">
                       Delete
                     </button>
                   </div>
                 </div>
+
                 <div className="ml-5 flex-1  flex flex-col justify-center items-center ">
                   <UserHotelDescription />
 

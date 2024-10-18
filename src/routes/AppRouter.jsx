@@ -18,7 +18,7 @@ import ConfirmBooking from "../pages/host/ConfirmBooking";
 import HostHistory from "../pages/host/HostHistory";
 import HostInfoLayout from "../layouts/host-layout/HostInfoLayout";
 import UserHotelDetail from "../components/UserHotelDetail";
-import HostHotelDetailEdit from "../components/HostHotelDetailEdit";
+import HostHotelDetailEdit from "../pages/host/HostHotelDetailEdit";
 import ProtectRouterUser from "./protectRouterUser";
 import ProtectRouterHost from "./ProtectRouterHost";
 
