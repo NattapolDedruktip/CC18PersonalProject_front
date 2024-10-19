@@ -8,6 +8,19 @@ export const createHote = async (token, form) => {
   });
 };
 
+export const deleteHote = async (token, id) => {
+  // console.log(token, id, "=============================");
+  return await axios.delete(
+    `http://localhost:8000/host/removeHote/` + `${id}`,
+
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
 export const getAllHote = (token) => {
   // console.log(token);
   return axios.get(
@@ -22,7 +35,7 @@ export const getAllHote = (token) => {
 };
 
 export const getHoteInfo = async (token, hoteId) => {
-  console.log(hoteId, "0000000000");
+  // console.log(hoteId, "0000000000");
   return await axios.get("http://localhost:8000/host/getHoteInfo/" + hoteId, {
     headers: {
       Authorization: `Bearer ${token}`,

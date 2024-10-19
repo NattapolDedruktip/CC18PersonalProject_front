@@ -14,3 +14,12 @@ export const uploadHotelPics = async (token, form) => {
     }
   );
 };
+
+export const removeHotelPic = async (token, formRemove) => {
+  console.log(formRemove);
+  return axios.post("http://localhost:8000/host/removeImage", formRemove, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

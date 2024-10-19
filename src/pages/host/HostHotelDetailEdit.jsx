@@ -7,13 +7,16 @@ import useAuthStore from "@/src/stores/auth-store";
 import HostUploadHotelPicButton from "@/src/components/HostUploadHotelPicButton";
 import { useParams } from "react-router-dom";
 import { getHoteInfo } from "@/src/api/host";
+import { removeHotelPic } from "@/src/api/hostImage";
+import { toast } from "react-toastify";
+import HostAddAvailableTime from "@/src/components/HostAddAvailableTime";
 
 function HostHotelDetailEdit() {
   const { id } = useParams();
   const user = useAuthStore((state) => state.user);
   const token = useAuthStore((state) => state.token);
   const [hoteData, setHoteData] = useState();
-  const [CarouselPublicId, setCarouselPublicId] = useState();
+  const [carouselPublicId, setCarouselPublicId] = useState();
 
   const [hoteImages, setHoteImages] = useState({
     url: "",
@@ -22,6 +25,7 @@ function HostHotelDetailEdit() {
     secure_url: "",
   });
 
+  //uploadHotelPic
   const inputFileRef = useRef(null);
 
   const hdlUploadClick = () => {
@@ -30,6 +34,7 @@ function HostHotelDetailEdit() {
     }
   };
 
+  //getAllPicIn carousel
   const getHoteInfoById = async (token, hoteId) => {
     const resp = await getHoteInfo(token, hoteId);
     // console.log(">>>>>>>>>>>>>>>>>>>>", resp.data);
@@ -39,6 +44,21 @@ function HostHotelDetailEdit() {
   useEffect(() => {
     getHoteInfoById(token, id);
   }, []);
+
+  //removeHotelPic
+
+  const hdlRemovePic = async (carouselPublicId) => {
+    // console.log(carouselPublicId);
+    // console.log(token);
+    const formRemove = {
+      id: id,
+      public_id: carouselPublicId,
+    };
+    // console.log("--------------", hoteData);
+    await removeHotelPic(token, formRemove);
+    await getHoteInfoById(token, id);
+    toast.success("remove pic successfully !");
+  };
 
   return (
     <div className="flex flex-col bg-MyBg ">
@@ -55,7 +75,11 @@ function HostHotelDetailEdit() {
 
               <div className="flex flex-1 ">
                 <div className="flex-1  flex flex-col gap-5 justify-center items-center">
-                  <HotelRoomPics item={hoteData} />
+                  <HotelRoomPics
+                    item={hoteData}
+                    carouselPublicId={carouselPublicId}
+                    setCarouselPublicId={setCarouselPublicId}
+                  />
                   <div className="flex gap-4">
                     {/* upload pic */}
                     <button
@@ -72,7 +96,10 @@ function HostHotelDetailEdit() {
                       />
                     </button>
 
-                    <button className="border-4 border-MainOrange text-MainOrange text-base font-bold font-bebas px-5 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition">
+                    <button
+                      onClick={() => hdlRemovePic(carouselPublicId)}
+                      className="border-4 border-MainOrange text-MainOrange text-base font-bold font-bebas px-5 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition"
+                    >
                       Delete
                     </button>
                   </div>
@@ -86,12 +113,7 @@ function HostHotelDetailEdit() {
                   </button>
                 </div>
                 <div className="flex-1 flex flex-col justify-center items-center gap-2">
-                  <UserHotelAvailableTime />
-                  <div className="flex gap-2">
-                    <button className="border-4 border-MainOrange text-MainOrange text-base font-bold font-bebas px-5 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition">
-                      Add
-                    </button>
-                  </div>
+                  <UserHotelAvailableTime hotelId={id} />
                 </div>
               </div>
 

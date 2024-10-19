@@ -16,7 +16,7 @@ const useHostStore = create(
           set({
             hoteList: resp.data,
           });
-          toast.success("Get all Hote successfully!");
+          // toast.success("Get all Hote successfully!");
           return resp.data;
         } catch (err) {
           console.log(err);

@@ -13,7 +13,7 @@ import dog1 from "../assets/dog.png";
 import dog2 from "../assets/dog2.png";
 import dog4 from "../assets/dog4.png";
 
-function HotelRoomPics({ item }) {
+function HotelRoomPics({ item, carouselPublicId, setCarouselPublicId }) {
   const [count, setCount] = useState(0);
   const handleClick = (value) => {
     if (count + value < 0) return;
@@ -21,6 +21,7 @@ function HotelRoomPics({ item }) {
     setCount(count + value);
     console.log(count + value);
     console.log(item?.hotelImages[count + value]?.public_id);
+    setCarouselPublicId(item?.hotelImages[count + value]?.public_id);
     // console.log(item?.hotelImages[count + value]);
   };
 

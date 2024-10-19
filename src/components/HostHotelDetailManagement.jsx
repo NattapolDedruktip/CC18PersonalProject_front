@@ -1,11 +1,21 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import useAuthStore from "../stores/auth-store";
+import useHostStore from "../stores/host-store";
+import { deleteHote } from "../api/host";
+import { toast } from "react-toastify";
 
 function HostHotelDetailManagement({ id, userId }) {
   const navigate = useNavigate();
-
-  const hdlDelete = () => {
-    console.log("DELETE hoteId", id);
+  const token = useAuthStore((state) => state.token);
+  const actionHostGetAllHote = useHostStore(
+    (state) => state.actionHostGetAllHote
+  );
+  const hdlDelete = async () => {
+    // console.log("DELETE hoteId", id);
+    await deleteHote(token, id);
+    await actionHostGetAllHote(token);
+    toast.success("delete Hote Successfully!");
   };
   return (
     <div className="flex flex-col gap-5">
