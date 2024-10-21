@@ -39,7 +39,7 @@ function UserHoteIMarkertem({ hotelId }) {
     getHoteDetail();
     getAvailableTime();
   }, []);
-  console.log(hoteData);
+  // console.log(hoteData);
   return (
     <div className="bg-MyBg border-4 border-MainOrange p-2 rounded-lg w-[1000px]">
       <div>

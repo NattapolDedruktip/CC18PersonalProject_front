@@ -44,7 +44,7 @@ export const getHoteInfo = async (token, hoteId) => {
 };
 
 export const getHotelAvailableTimebyId = async (token, hoteId) => {
-  console.log(hoteId);
+  // console.log(hoteId);
   return await axios.get(
     "http://localhost:8000/host/getHoteAvailableTime/" + hoteId,
     {
