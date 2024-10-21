@@ -175,7 +175,7 @@ function Map({ hotelId }) {
           <CurrentPositionButton />
           {listMarker.map((item, index) => (
             <Marker key={index} position={[item?.lat, item?.lng]}>
-              <Popup className="w-[50vw]">
+              <Popup className="w-[62vw] h-fit">
                 <div>
                   <UserHoteIMarkertem hotelId={item.id} />
                 </div>

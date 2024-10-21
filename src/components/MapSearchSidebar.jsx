@@ -51,53 +51,12 @@ function MapSearchSidebar() {
                 />
               </div>
             </div>
-
-            {/* services */}
-            <div className="flex flex-col justify-between">
-              <div className="flex  gap-3 ">
-                <input
-                  className="h-8 w-8"
-                  type="checkbox"
-                  id="parking"
-                  name="parking"
-                  value={formData.parking}
-                  onChange={hdlOnchange}
-                />
-                <label className="font-body font-bold text-3xl">Parking</label>
-              </div>
-              <div className="flex gap-3">
-                <input
-                  type="checkbox"
-                  className="h-8 w-8"
-                  id="foodAndBev"
-                  name="foodAndBev"
-                  value={formData.foodAndBev}
-                  onChange={hdlOnchange}
-                />
-                <label className="font-body font-bold text-3xl">
-                  FOOD AND BEVERAGE
-                </label>
-              </div>
-              <div className="flex gap-3">
-                <input
-                  type="checkbox"
-                  className="h-8 w-8"
-                  id="parking"
-                  name="parking"
-                  value={formData.specialService}
-                  onChange={hdlOnchange}
-                />
-                <label className="font-body font-bold text-3xl">
-                  SPECIAL SERVICES
-                </label>
-              </div>
-            </div>
           </div>
         </div>
 
         <div className="flex flex-col gap-3">
           <p className="font-body font-bold text-3xl">YOUR BUDGET(NET.):</p>
-          <div className="flex justify-around">
+          <div className="flex flex-col justify-around">
             <div>
               <input
                 name="budgetMin"
