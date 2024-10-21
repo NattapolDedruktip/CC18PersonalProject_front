@@ -10,6 +10,8 @@ import { getHoteInfo } from "@/src/api/host";
 import { removeHotelPic } from "@/src/api/hostImage";
 import { toast } from "react-toastify";
 import HostAddAvailableTime from "@/src/components/HostAddAvailableTime";
+import HostHotelAvailableTime from "@/src/components/HostHotelAvailableTime";
+import HostUpdateDescription from "@/src/components/ui/HostUpdateDescription";
 
 function HostHotelDetailEdit() {
   const { id } = useParams();
@@ -59,7 +61,7 @@ function HostHotelDetailEdit() {
     await getHoteInfoById(token, id);
     toast.success("remove pic successfully !");
   };
-
+  // console.log(hoteData);
   return (
     <div className="flex flex-col bg-MyBg ">
       <div className="h-[10vh] bg-MyBg">header</div>
@@ -70,7 +72,7 @@ function HostHotelDetailEdit() {
             <div className="h-[10vh] bg-MyBg"></div>
             <div className="text-InputBg bg-MyBg rounded-xl w-[80vw] h-fit flex flex-col border-4 border-MainOrange p-10">
               <div className="mx-auto text-7xl font-body font-bold text-MainOrange h-[10%] flex items-center ">
-                Hotel Name
+                {hoteData ? `${hoteData.hotelName}` : "Loading..."}
               </div>
 
               <div className="flex flex-1 ">
@@ -106,14 +108,27 @@ function HostHotelDetailEdit() {
                 </div>
 
                 <div className="ml-5 flex-1  flex flex-col justify-center items-center ">
-                  <UserHotelDescription />
+                  <UserHotelDescription
+                    hoteData={hoteData}
+                    setHoteData={setHoteData}
+                    getHoteInfoById={getHoteInfoById}
+                  />
 
-                  <button className="border-4 border-MainOrange text-MainOrange text-base font-bold font-bebas px-5 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition">
-                    Update
-                  </button>
+                  <div>
+                    <HostUpdateDescription
+                      getHoteInfoById={getHoteInfoById}
+                      id={id}
+                      hoteData={hoteData}
+                      setHoteData={setHoteData}
+                    />
+                  </div>
                 </div>
                 <div className="flex-1 flex flex-col justify-center items-center gap-2">
-                  <UserHotelAvailableTime hotelId={id} />
+                  <HostHotelAvailableTime
+                    hotelId={id}
+                    setHoteData={setHoteData}
+                    getHoteInfoById={getHoteInfoById}
+                  />
                 </div>
               </div>
 
@@ -126,16 +141,7 @@ function HostHotelDetailEdit() {
               </div>
 
               <div className="bg-MyBg z-10">
-                <Map />
-                <div className="flex gap-10 justify-center">
-                  <button className="border-4 border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-10 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition">
-                    Pin your Hote
-                  </button>
-
-                  <button className="border-4 border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-10 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition">
-                    SAVE CHANGE
-                  </button>
-                </div>
+                <Map hotelId={id} />
               </div>
             </div>
           </div>

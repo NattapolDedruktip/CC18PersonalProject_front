@@ -25,18 +25,35 @@ import { Calendar } from "./ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Label } from "./ui/label";
 import { Input } from "@/components/ui/input";
+import { createAvailableTime } from "../api/host";
+import useAuthStore from "../stores/auth-store";
 
-function HostAddAvailableTime({ hotelId }) {
+function HostAddAvailableTime({
+  hotelId,
+  freeTime,
+  setFreeTime,
+  getAvailableTime,
+}) {
+  const token = useAuthStore((state) => state.token);
+
   // State variables
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [price, setPrice] = useState("");
+  const [isOpen, setIsOpen] = useState(false); // Control dialog visibility
+  const [error, setError] = useState(""); // Error message state
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
+
+    // Validation: Check if all fields are filled
+    if (!startDate || !endDate || !startTime || !endTime || !price) {
+      setError("All fields are required.");
+      return; // Prevent form submission if validation fails
+    }
 
     // Gather form data
     const formData = {
@@ -45,14 +62,29 @@ function HostAddAvailableTime({ hotelId }) {
       startTime,
       endTime,
       price,
+      hotelId,
     };
 
-    // TODO: Add logic to send formData to the server or handle it as needed
     console.log("Form submitted:", formData);
+
+    await createAvailableTime(token, formData);
+
+    // Clear the form fields after submission
+    setStartDate(null);
+    setEndDate(null);
+    setStartTime("");
+    setEndTime("");
+    setPrice("");
+    setError(""); // Clear error message
+
+    // Close the dialog after submission
+    setIsOpen(false);
+
+    await getAvailableTime(token, hotelId);
   };
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button
           className="border-4 bg-MyBg border-MainOrange text-MainOrange text-xl font-bold font-bebas px-3 py-5 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition"
@@ -70,7 +102,7 @@ function HostAddAvailableTime({ hotelId }) {
           </DialogDescription>
 
           {/* Form starts here */}
-          <form onSubmit={handleSubmit}>
+          <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
             {/* Start Date */}
             <div>
               <Label htmlFor="startDate" className="text-right">
@@ -118,7 +150,6 @@ function HostAddAvailableTime({ hotelId }) {
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Start time</SelectLabel>
-                      {/* Time options */}
                       {[...Array(24).keys()].map((i) => (
                         <SelectItem key={i} value={`${i}.00`}>
                           {`${i < 10 ? "0" : ""}${i}.00`}
@@ -177,7 +208,6 @@ function HostAddAvailableTime({ hotelId }) {
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>End time</SelectLabel>
-                      {/* Time options */}
                       {[...Array(24).keys()].map((i) => (
                         <SelectItem key={i} value={`${i}.00`}>
                           {`${i < 10 ? "0" : ""}${i}.00`}
@@ -203,6 +233,8 @@ function HostAddAvailableTime({ hotelId }) {
                 className="col-span-3"
               />
             </div>
+
+            {error && <p className="text-red-500">{error}</p>}
 
             <DialogFooter>
               <Button type="submit">Add</Button>

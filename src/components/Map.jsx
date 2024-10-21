@@ -17,19 +17,48 @@ import {
 //import 2
 import "leaflet/dist/leaflet.css";
 import * as L from "leaflet";
+import useAuthStore from "../stores/auth-store";
+import { createLatLng, getEveryHoteLatLng } from "../api/host";
+import { toast } from "react-toastify";
+import UserHoteIMarkertem from "./UserHoteIMarkertem";
 
-function Map() {
+function Map({ hotelId }) {
+  const token = useAuthStore((state) => state.token);
+  const user = useAuthStore((state) => state.user);
+
   const [position, setPosition] = useState(null);
+  const [listMarker, setListMark] = useState([]);
+
+  let currentHotePos;
+
+  //getAllMarker
+  const getAllMarker = async () => {
+    const resp = await getEveryHoteLatLng(token);
+    setListMark(resp.data);
+  };
+
+  useEffect(() => {
+    getAllMarker();
+  }, []);
+
+  //Edit lat lng  and send to db
+  const hdlUpdateLatlng = async (latlng) => {
+    // console.log(currentHotePos, "currentHotePos");
+    await createLatLng(token, currentHotePos, hotelId);
+    await getAllMarker();
+    toast.success("Position is updated!");
+  };
 
   // for event click make marker
-
   const LocationMarker = () => {
     const [position, setPosition] = useState(null);
     const [form, setForm] = useState({ lat: null, lng: null });
     useMapEvents({
       click: (e) => {
-        // console.log(e.latlng);
+        console.log(e.latlng);
         setPosition(e.latlng);
+        // hdlUpdateLatlng(e.latlng);
+        currentHotePos = e.latlng;
         setForm({
           ...form,
           lat: e.latlng.lat,
@@ -44,7 +73,7 @@ function Map() {
           <Popup>You are here</Popup>
         </Marker>
 
-        <Circle
+        {/* <Circle
           center={form}
           radius={1500}
           pathOptions={{
@@ -52,7 +81,7 @@ function Map() {
             fillColor: "orange",
             fillOpacity: 0.2,
           }}
-        />
+        /> */}
       </>
     );
   };
@@ -124,26 +153,49 @@ function Map() {
 
     return null;
   };
-
+  console.log(listMarker);
   return (
-    <div className="bg-MyBg w-full h-[90vh]  flex justify-center items-end">
-      {/* 1 */}
-      <MapContainer
-        center={[13, 100]}
-        zoom={7}
-        className="m-auto p-10 text-InputBg   bg-white w-[95%] h-[85vh] border-8 border-MainOrange"
-      >
-        {/* 2 */}
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+    <div>
+      <div className="bg-MyBg w-full h-[90vh]  flex justify-center items-end">
+        {/* 1 */}
+        <MapContainer
+          center={[13, 100]}
+          zoom={7}
+          className="m-auto p-10 text-InputBg   bg-white w-[95%] h-[85vh] border-8 border-MainOrange"
+        >
+          {/* 2 */}
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
 
-        {/* 4 event */}
-        <StartLocationMarker />
-        <LocationMarker />
-        <CurrentPositionButton />
-      </MapContainer>
+          {/* 4 event */}
+          <StartLocationMarker />
+          <LocationMarker />
+          <CurrentPositionButton />
+          {listMarker.map((item, index) => (
+            <Marker key={index} position={[item?.lat, item?.lng]}>
+              <Popup className="w-[50vw]">
+                <div>
+                  <UserHoteIMarkertem hotelId={item.id} />
+                </div>
+              </Popup>
+              <Tooltip>{item.title}</Tooltip>
+            </Marker>
+          ))}
+        </MapContainer>
+      </div>
+      <div className="flex gap-10 justify-center">
+        {/* Conditionally render the button based on user role */}
+        {user?.role === "HOST" && (
+          <button
+            onClick={hdlUpdateLatlng}
+            className="border-4 border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-10 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition"
+          >
+            Pin your Hote
+          </button>
+        )}
+      </div>
     </div>
   );
 }

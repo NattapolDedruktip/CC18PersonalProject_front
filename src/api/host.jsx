@@ -42,3 +42,74 @@ export const getHoteInfo = async (token, hoteId) => {
     },
   });
 };
+
+export const getHotelAvailableTimebyId = async (token, hoteId) => {
+  console.log(hoteId);
+  return await axios.get(
+    "http://localhost:8000/host/getHoteAvailableTime/" + hoteId,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+export const createAvailableTime = async (token, form) => {
+  return await axios.post(
+    "http://localhost:8000/host/createAvailableTime",
+    form,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+export const removeAvailableTime = async (token, AvailableTimeId) => {
+  return await axios.delete(
+    "http://localhost:8000/host/removeAvailableTime/" + AvailableTimeId,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+export const editHoteDescription = async (token, description, hotelId) => {
+  // console.log(token);
+  // console.log(description);
+  return await axios.patch(
+    "http://localhost:8000/host/hote/" + hotelId,
+    { description },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+//map api
+export const createLatLng = async (token, latLng, hotelId) => {
+  // console.log(latLng);
+  return await axios.patch(
+    "http://localhost:8000/host/hote/createLatLng/" + hotelId,
+    { latLng },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+export const getEveryHoteLatLng = async (token) => {
+  return await axios.get("http://localhost:8000/host/hote/getAllLatLng", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

@@ -14,6 +14,7 @@ function MyHote() {
   useEffect(() => {
     // console.log(token);
     actionHostGetAllHote(token);
+
     // console.log(">>>>>>>>>>>>>>>>");
   }, []);
 

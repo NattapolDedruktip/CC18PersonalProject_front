@@ -1,16 +1,25 @@
 import React from "react";
+import useAuthStore from "../stores/auth-store";
 
-function UserHotelAvailableTimeItem() {
+function UserHotelAvailableTimeItem({ availableTimeItem, getAvailableTime }) {
+  const user = useAuthStore((state) => state.user);
+  // console.log(user, "======================");
+
   return (
-    <div className="flex justify-around border-2 border-InputBg p-4 rounded-xl">
+    <div className="flex justify-around border-2 text-InputBg border-InputBg p-4 rounded-xl">
       <div className="flex flex-col gap-4">
-        <div>Date : xxxx/xx/xx</div>
-        <div>Time : xx.xx</div>
-        <div>Price : xxxx ฿</div>
+        <div>{`Start Date : ${availableTimeItem.startDate}`}</div>
+        <div>{`Start Time : ${availableTimeItem.startTime}`}</div>
+        <div>{`End Date : ${availableTimeItem.endDate}`}</div>
+        <div>{`End Time : ${availableTimeItem.endTime}`}</div>
+        <div>{`Price : ${availableTimeItem.price} ฿`}</div>
       </div>
-      <button className="my-auto border-4 h-[50px] border-MainOrange text-MainOrange text-xl font-bold font-bebas px-2 py-2 rounded-xl tracking-widest hover:bg-MainOrange hover:text-InputText transition">
-        BOOK NOW
-      </button>
+
+      {user.role === "USER" && (
+        <button className="my-auto border-4 h-[50px] border-MainOrange text-MainOrange text-xl font-bold font-bebas px-2 py-2 rounded-xl tracking-widest hover:bg-MainOrange hover:text-InputText transition">
+          BOOK
+        </button>
+      )}
     </div>
   );
 }

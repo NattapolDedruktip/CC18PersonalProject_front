@@ -21,13 +21,13 @@ function HostHotelDetailManagement({ id, userId }) {
     <div className="flex flex-col gap-5">
       <Link
         to={`/host/hote/${id}`}
-        className="border-4 border-MainOrange text-MainOrange text-3xl font-bold font-bebas w-[60%] px-10 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition"
+        className="border-4 flex justify-center border-MainOrange text-MainOrange text-2xl font-bold font-bebas w-[80%] px-10 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition"
       >
         Edit
       </Link>
       <button
         onClick={hdlDelete}
-        className="border-4 border-MainOrange text-MainOrange text-3xl font-bold font-bebas w-[60%] px-10 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition"
+        className="border-4 flex justify-center border-MainOrange text-MainOrange text-2xl font-bold font-bebas w-[80%] px-10 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition"
       >
         Delete
       </button>

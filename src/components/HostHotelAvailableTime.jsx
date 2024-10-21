@@ -1,21 +1,55 @@
-import React from "react";
-import HostHotelAvailableTimeItem from "./HostHotelAvailableTimeItem";
+import React, { useEffect, useState } from "react";
+import UserHotelAvailableTimeItem from "./UserHotelAvailableTimeItem";
+import HostAddAvailableTime from "./HostAddAvailableTime";
+import HostHoteAvailableTimeItem from "./HostHoteAvailableTimeItem";
+import useAuthStore from "../stores/auth-store";
+import { getHotelAvailableTimebyId } from "../api/host";
 
-function HostHotelAvailableTime() {
+function HostHotelAvailableTime({ hotelId }) {
+  const [freeTime, setFreeTime] = useState([]);
+
+  const token = useAuthStore((state) => state.token);
+
+  const getAvailableTime = async () => {
+    try {
+      const resp = await getHotelAvailableTimebyId(token, hotelId);
+      setFreeTime(resp.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getAvailableTime(token, hotelId);
+  }, []);
+  // console.log(freeTime);
+
+  //useEffect for monitor freeTime
+  // useEffect(() => {
+  //   console.log("Updated freeTime:", freeTime);
+  // }, [freeTime]); // This effect will run when freeTime changes
+
   return (
-    <div className="flex flex-col gap-2 justify-between">
-      <p className="font-body text-3xl font-bold text-MainOrange">
+    <div className="flex flex-col gap-3 w-[90%]">
+      <div className="mx-auto text-4xl font-body font-bold text-MainOrange h-[10%] flex items-center">
         Available Time
-      </p>
-      <div className="flex flex-col gap-3">
-        <HostHotelAvailableTimeItem />
-        <HostHotelAvailableTimeItem />
-        <HostHotelAvailableTimeItem />
       </div>
-      <div className="flex gap-2 justify-center">
-        <button className="border-4 border-MainOrange text-MainOrange text-xl font-bold font-bebas w-[25%]  py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition">
-          Add
-        </button>
+      <div className="flex flex-col gap-3">
+        {freeTime.map((availableTimeItem) => (
+          <HostHoteAvailableTimeItem
+            key={availableTimeItem.id}
+            availableTimeItem={availableTimeItem}
+            getAvailableTime={getAvailableTime}
+          />
+        ))}
+      </div>
+      <div>
+        <HostAddAvailableTime
+          freeTime={freeTime}
+          setFreeTime={setFreeTime}
+          getAvailableTime={getAvailableTime}
+          hotelId={hotelId}
+        />
       </div>
     </div>
   );
