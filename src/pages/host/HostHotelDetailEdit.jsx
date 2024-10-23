@@ -132,13 +132,13 @@ function HostHotelDetailEdit() {
                 </div>
               </div>
 
-              <div className="mx-auto flex gap-5 h-[10%] items-center text-4xl font-body font-bold text-white p-5">
+              {/* <div className="mx-auto flex gap-5 h-[10%] items-center text-4xl font-body font-bold text-white p-5">
                 <div>FOR MORE INFO :</div>
                 <div>Hostcontact@#gmail.com</div>
                 <button className="border-4 border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-10 py-3 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition">
                   EDIT HOST CONTACT
                 </button>
-              </div>
+              </div> */}
 
               <div className="bg-MyBg z-10">
                 <Map hotelId={id} />

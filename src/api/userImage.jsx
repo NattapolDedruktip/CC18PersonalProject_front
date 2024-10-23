@@ -27,3 +27,12 @@ export const deleteProfile = async (token, publicId) => {
     }
   );
 };
+
+export const uploadPaymentSlip = async (token, form) => {
+  console.log(form);
+  return axios.post("http://localhost:8000/user/uploadSlip", form, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

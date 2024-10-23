@@ -3,9 +3,11 @@ import HotelRoomPics from "./HotelRoomPics";
 import HostHotelDetail from "./HostHotelDetail";
 import HostHotelDetailManagement from "./HostHotelDetailManagement";
 import UserHotelAvailableTime from "./UserHotelAvailableTime";
+import HostHotelAvailableTime from "./HostHotelAvailableTime";
 
 function HostMyHoteItem({ item }) {
-  // console.log(id);
+  console.log(item);
+
   return (
     <div className="border-4 border-MainOrange p-2 rounded-lg">
       <div className="flex mx-auto w-[90%] my-5 h-fit  justify-around items-center  ">
@@ -13,7 +15,7 @@ function HostMyHoteItem({ item }) {
           <HotelRoomPics item={item} />
         </div>
         <div className="w-[40%] ">
-          <UserHotelAvailableTime
+          <HostHotelAvailableTime
             item={item}
             hotelId={item.id}
             userId={item.userId}

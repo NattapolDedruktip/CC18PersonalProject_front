@@ -8,8 +8,6 @@ function ConfirmBooking() {
         Confirm Booking
       </p>
       <HostConfirmBookingItem />
-      <HostConfirmBookingItem />
-      <HostConfirmBookingItem />
     </div>
   );
 }

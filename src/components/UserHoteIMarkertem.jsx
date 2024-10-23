@@ -46,7 +46,7 @@ function UserHoteIMarkertem({ hotelId }) {
         <div className="flex mx-auto w-full my-5 h-fit  justify-around items-center  ">
           <div className="mr-40 w-[25%] flex flex-col gap-4">
             <div className="flex justify-start ml-10  font-body text-4xl text-MainOrange font-bold">
-              Hotel name
+              {hoteData.hotelName}
             </div>
             <HotelRoomPics item={hoteData} />
           </div>
@@ -74,7 +74,7 @@ function UserHoteIMarkertem({ hotelId }) {
               </div>
             </Carousel>
           </div>
-          <div className="flex justify-center  w-[50%]">
+          <div className="ml-12 flex justify-center  w-[50%]">
             <UserHotelDescription
               hoteData={hoteData}
               setHoteData={setHoteData}

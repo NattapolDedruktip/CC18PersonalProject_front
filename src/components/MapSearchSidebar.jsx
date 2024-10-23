@@ -37,19 +37,6 @@ function MapSearchSidebar() {
                   placeholder="1.5 KM."
                 />
               </div>
-
-              <div className="flex flex-col gap-2 ">
-                <label className="font-body font-bold text-3xl">
-                  PERIOD YOU WANT TO STAY(H):
-                </label>
-                <input
-                  name="period"
-                  value={formData.period}
-                  placeholder="2H+"
-                  onChange={hdlOnchange}
-                  className="w-full px-6 py-4 text-center bg-InputBg text-InputText rounded-full text-xl font-bold tracking-widest font-bebas focus:outline-none"
-                />
-              </div>
             </div>
           </div>
         </div>

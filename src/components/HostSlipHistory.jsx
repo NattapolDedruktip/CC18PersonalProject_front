@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
-function HostSlipFromUser({ transactions }) {
-  const slipImg = transactions.secure_url;
+function HostSlipHistory({ history }) {
+  const slipImg = history.secure_url;
   const [isOpen, setIsOpen] = useState(false);
-
   return (
     <div className="w-fit max-w-sm h-[40vh] mx-16 border overflow-hidden border-4 border-MainOrange">
       {/* DialogTrigger handles the click to open the modal */}
@@ -30,4 +29,4 @@ function HostSlipFromUser({ transactions }) {
   );
 }
 
-export default HostSlipFromUser;
+export default HostSlipHistory;

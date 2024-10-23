@@ -67,6 +67,17 @@ export const createAvailableTime = async (token, form) => {
   );
 };
 
+export const getAvailableTimeById = async (token, AvailableTimeId) => {
+  return await axios.get(
+    "http://localhost:8000/host/getHoteAvailableTimeById/" + AvailableTimeId,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
 export const removeAvailableTime = async (token, AvailableTimeId) => {
   return await axios.delete(
     "http://localhost:8000/host/removeAvailableTime/" + AvailableTimeId,
@@ -108,6 +119,69 @@ export const createLatLng = async (token, latLng, hotelId) => {
 
 export const getEveryHoteLatLng = async (token) => {
   return await axios.get("http://localhost:8000/host/hote/getAllLatLng", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+//booking
+export const createBooking = async (token, availableTimeItem) => {
+  // console.log(availableTimeItem);
+  return await axios.post(
+    "http://localhost:8000/user/createBooking",
+    availableTimeItem,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+export const getMyBookingByUSerId = async (token, userId) => {
+  return await axios.get("http://localhost:8000/user/getMyBooking", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const getAllTransactionByUserId = async (token) => {
+  return await axios.get("http://localhost:8000/host/getAllTransactions", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const confirmTransaction = async (token, form) => {
+  // console.log(form);
+  return await axios.patch(
+    "http://localhost:8000/host/confirmTransaction",
+    form,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+export const cancelTransaction = async (token, form) => {
+  return await axios.patch(
+    "http://localhost:8000/host/cancelTransaction",
+    form,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+export const getTransactionHistory = async (token) => {
+  return await axios.get("http://localhost:8000/host/transactionHistory", {
     headers: {
       Authorization: `Bearer ${token}`,
     },

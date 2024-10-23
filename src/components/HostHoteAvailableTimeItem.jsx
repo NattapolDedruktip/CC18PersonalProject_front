@@ -11,12 +11,14 @@ export default function HostHoteAvailableTimeItem({
   const token = useAuthStore((state) => state.token);
 
   const onDelete = async () => {
+    // const availableTimeForm = {};
     await removeAvailableTime(token, availableTimeItem.id);
     await getAvailableTime(token, availableTimeItem.hotelId);
   };
+  console.log(availableTimeItem);
   return (
-    <div className="flex justify-around border-2 border-InputBg p-4 rounded-xl">
-      <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-2 justify-around border-2 border-InputBg p-4 rounded-xl">
+      <div className="flex flex-col gap-4 text-InputBg">
         <div>{`Start Date : ${availableTimeItem.startDate}`}</div>
         <div>{`Start Time : ${availableTimeItem.startTime}`}</div>
         <div>{`End Date : ${availableTimeItem.endDate}`}</div>
