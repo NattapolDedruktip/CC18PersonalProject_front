@@ -24,3 +24,16 @@ export const getAllBookingHistory = async (token, userId) => {
     }
   );
 };
+
+export const editProfile = async (token, userId, form) => {
+  console.log(token);
+  return await axios.patch(
+    `http://localhost:8000/user/editProfile/` + `${userId}`,
+    form,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};

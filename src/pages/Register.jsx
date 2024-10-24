@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import useAuthStore from "../stores/auth-store";
 import validateRegister from "../utils/validatorRegister";
 import { useNavigate } from "react-router-dom";
+import { register } from "../api/auth";
+import { toast } from "react-toastify";
 
 const initialState = {
   email: "",
@@ -35,7 +37,7 @@ function Register() {
 
   const hdlUpdateMember = (e) => {};
 
-  const hdlSubmit = (e) => {
+  const hdlSubmit = async (e) => {
     e.preventDefault();
     // console.log(form)
 
@@ -47,22 +49,22 @@ function Register() {
     //step 1 validate with joi
     //step 2 send to back
 
-    console.log(form);
+    // console.log(form);
     // actionRegister(form)
-
+    await register(form);
     setForm(initialState);
-
+    toast.success("Your Register is successfully!");
     navigate("/");
   };
 
   return (
-    <div className="bg-MyBg h-[86vh] flex items-center justify-center">
-      <div className="bg-MyBg border-8 border-MainOrange rounded-lg p-10">
+    <div className="bg-MyBg h-[100vh] flex items-center justify-center">
+      <div className="mb-[12vh] bg-MyBg border-8 border-MainOrange rounded-lg p-10">
         <h1 className="text-MainOrange text-6xl font-body font-bold mb-8 text-center">
           Register
         </h1>
 
-        <form onSubmit={hdlSubmit} className="space-y-6">
+        <form onSubmit={hdlSubmit} className=" space-y-6">
           <div>
             <input
               name="email"
@@ -85,7 +87,7 @@ function Register() {
               onChange={hdlOnChange}
               type="password"
               placeholder="PASSWORD"
-              className="w-full px-6 py-4 text-center bg-InputBg text-InputText rounded-full text-xl font-bold tracking-widest font-bebas focus:outline-none"
+              className=" w-full px-6 py-4 text-center bg-InputBg text-InputText rounded-full text-xl font-bold tracking-widest font-bebas focus:outline-none"
             />
 
             {formError.password && (

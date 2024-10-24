@@ -1,0 +1,1306 @@
+
+<!-- Doctype HTML5 -->
+<!doctype html>
+<html lang="en" >
+<head>
+
+<!-- be_ixf, sdk, gho-->
+<meta id="be:sdk" content="dotnet_sdk_1.4.15" />
+<meta id="be:timer" content="0ms" />
+<meta id="be:orig_url" content="https://www.lhw.com/" />
+<meta id="be:capsule_url" content="http://ixfd-api.bc0a.com/api/ixf/1.0.0/get_capsule/f00000000049116/01274870489?client=dotnet_sdk&client_version=1.4.15&orig_url=https%3A%2F%2Fwww.lhw.com%2F&base_url=https%3A%2F%2Fwww.lhw.com%2F&user_agent=Mozilla%2F5.0+(iPhone%3B+CPU+iPhone+OS+17_6_1+like+Mac+OS+X)+AppleWebKit%2F605.1.15+(KHTML%2C+like+Gecko)+Version%2F17.6+Mobile%2F15E148+Safari%2F604.1" />
+<meta id="be:norm_url" content="https://www.lhw.com/" />
+<meta id="be:api_dt" content="py_2019; pm_10; pd_03; ph_21; pmh_05; p_epoch:1570161945274" />
+<meta id="be:mod_dt" content="py_2019; pm_10; pd_03; ph_21; pmh_05; p_epoch:1570161945274" />
+<meta id="be:messages" content="0" />
+<script type='text/javascript'>
+if (window.BEJSSDKObserver === undefined) {
+  (function(BEJSSDKObserver, $, undefined) {
+    var observer = void 0;
+    var listeners = [];
+    var readySet = [];
+    var doc = window.document;
+    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+
+    function checkSelector(selector, fn, indexList) {
+      var elements = doc.querySelectorAll(selector);
+  /**
+    issues on IE @see https://www.codesd.com/item/javascript-es6-not-a-function-error.html
+    elements = Array.from(elements);
+
+    */
+    for (var i = 0, len = elements.length; i < len; i++) {
+      /* -1 means all instances */
+      if (indexList != -1 && !(i in indexList)) {
+        continue;
+      }
+      var element = elements[i];
+      for (var j = 0; j < readySet.length; j++) {
+        if (readySet[j] == element.className || readySet[j] == element.id) {
+          return;
+        }
+      }
+      if (element.className) {
+        readySet.push(element.className);
+      }
+      if (element.id) {
+        readySet.push(element.id);
+      }
+
+      if (!element.ready || MutationObserver==null) {
+        element.ready = true;
+        fn.call(element, element);
+      }
+    }
+  }
+
+  function checkListeners() {
+    listeners.forEach(function (listener) {
+      return checkSelector(listener.selector, listener.fn, listener.indexList);
+    });
+  }
+
+  function removeListener(selector, fn) {
+    var i = listeners.length;
+    while (i--) {
+      var listener = listeners[i];
+      if (listener.selector === selector && listener.fn === fn) {
+        listeners.splice(i, 1);
+        if (!listeners.length && observer) {
+          observer.disconnect();
+          observer = null;
+        }
+      }
+    }
+  }
+
+/**
+ * Fire event on first js selector
+ * @param selector string to watch on
+ * @param fn       callback function
+ * @param index_list can be undefined which means only first one
+ *                   or -1 which means all
+ *                   or a list of allowable indexes
+ */
+ BEJSSDKObserver.jsElementReady = function(selector, fn, index_list) {
+  if (index_list === undefined) {
+    index_list = [];
+    index_list.push(0);
+  }
+
+  if (MutationObserver != null) {
+    if (!observer) {
+      observer = new MutationObserver(checkListeners);
+      observer.observe(doc.documentElement, {
+        childList: true,
+        subtree: true
+      });
+    }
+    listeners.push({ selector: selector, fn: fn, indexList: index_list });
+  } else {
+    /* <= IE8 */
+    if (!document.addEventListener) {
+      /* log("<=IE8 attachEvent assignment"); */
+      document.addEventListener = document.attachEvent;
+    }
+    document.addEventListener("DOMContentLoaded", function(event) {
+      var elements = doc.querySelectorAll(selector);
+      for (var i = 0, len = elements.length; i < len; i++) {
+        /* -1 means all instances */
+        if (index_list != -1 && !(i in index_list)) {
+          continue;
+        }
+        var element = elements[i];
+        element.ready = true;
+        fn.call(element, element);
+      }
+    });
+  }
+
+  checkSelector(selector, fn, index_list);
+  return function () {
+    return removeListener(selector, fn);
+  };
+};
+}(window.BEJSSDKObserver = window.BEJSSDKObserver || {}));
+}
+var jsElementReady = window.BEJSSDKObserver.jsElementReady;
+
+if (window.BELinkBlockGenerator === undefined) {
+  (function(BELinkBlockGenerator, $, undefined) {
+    BELinkBlockGenerator.MAXIMUM_HEADLINE_LENGTH = 100;
+    BELinkBlockGenerator.MAXIMUM_DESC_LENGTH = 200;
+
+    BELinkBlockGenerator.IND_LINK_BLOCK_TYPE_URL_TYPE = 0;
+    BELinkBlockGenerator.IND_LINK_BLOCK_TYPE_HEADLINE_TYPE = 1;
+    BELinkBlockGenerator.IND_LINK_BLOCK_TYPE_DESCRIPTION_TYPE = 2;
+    BELinkBlockGenerator.IND_LINK_BLOCK_TYPE_IMAGE_TYPE = 3;
+
+    BELinkBlockGenerator.REPLACEMENT_STRATEGY_OVERWRITE = 0;
+    BELinkBlockGenerator.REPLACEMENT_STRATEGY_POST_APPEND_ELEMENT = 1;
+    BELinkBlockGenerator.REPLACEMENT_STRATEGY_PRE_APPEND_ELEMENT = 2;
+    BELinkBlockGenerator.REPLACEMENT_STRATEGY_PRE_APPEND_PARENT = 3;
+
+    BELinkBlockGenerator.setMaximumHeadlineLength = function(length) {
+      BELinkBlockGenerator.MAXIMUM_HEADLINE_LENGTH = length;
+    };
+
+    BELinkBlockGenerator.setMaximumDescriptionLength = function(length) {
+      BELinkBlockGenerator.MAXIMUM_DESC_LENGTH = length;
+    };
+
+    BELinkBlockGenerator.generateIndividualLinks = function(parentElement, linkStructure, link) {
+      var link_level_element_tag = linkStructure[0];
+      var link_level_element = document.createElement(link_level_element_tag);
+      var link_attribute_dictionary = linkStructure[1];
+      var allowable_elements = linkStructure[2];
+      var children_link_structures = linkStructure[3];
+      for (var link_attribute_key in link_attribute_dictionary) {
+        link_level_element.setAttribute(link_attribute_key, link_attribute_dictionary[link_attribute_key]);
+      }
+
+      var added_something = false;
+      if (allowable_elements.indexOf(BELinkBlockGenerator.IND_LINK_BLOCK_TYPE_URL_TYPE)>=0) {
+        link_level_element.setAttribute('href', link.url);
+        added_something = true;
+      }
+      if (allowable_elements.indexOf(BELinkBlockGenerator.IND_LINK_BLOCK_TYPE_HEADLINE_TYPE)>=0 && link.h1) {
+        var headline_text = link.h1;
+        if (headline_text.length > BELinkBlockGenerator.MAXIMUM_HEADLINE_LENGTH) {
+          headline_text = headline_text.substring(0, BELinkBlockGenerator.MAXIMUM_HEADLINE_LENGTH) + '...';
+        }
+        var text_node = document.createTextNode(headline_text);
+        link_level_element.appendChild(text_node);
+        added_something = true;
+      }
+      if (allowable_elements.indexOf(BELinkBlockGenerator.IND_LINK_BLOCK_TYPE_DESCRIPTION_TYPE)>=0 && link.desc) {
+        var desc_text = link.desc;
+        if (desc_text.length > BELinkBlockGenerator.MAXIMUM_DESC_LENGTH) {
+          desc_text = desc_text.substring(0, BELinkBlockGenerator.MAXIMUM_DESC_LENGTH) + '...';
+        }
+        var text_node = document.createTextNode(desc_text);
+        link_level_element.appendChild(text_node);
+        added_something = true;
+      }
+      if (allowable_elements.indexOf(BELinkBlockGenerator.IND_LINK_BLOCK_TYPE_IMAGE_TYPE)>=0 && link.image) {
+        link_level_element.setAttribute('src', link.image);
+        added_something = true;
+      }
+/**
+    don't emit for empty links, desc, headline, image
+    except for parent structures where allowable_length=0
+    */
+    if (!added_something && allowable_elements.length != 0) {
+
+      return;
+    }
+    /* go depth first */
+    for (var childrenIndex=0; childrenIndex<children_link_structures.length; childrenIndex++) {
+      var childLinkStructure = children_link_structures[childrenIndex];
+      BELinkBlockGenerator.generateIndividualLinks(link_level_element, childLinkStructure, link);
+    }
+    parentElement.appendChild(link_level_element);
+  };
+
+  BELinkBlockGenerator.insertLinkBlocks = function(targetElement, replacementStrategy, overallStructure, linkStructure, links,
+                                                   titleStructure) {
+    if (targetElement == null) {
+      return;
+    }
+
+    if (replacementStrategy == BELinkBlockGenerator.REPLACEMENT_STRATEGY_OVERWRITE) {
+      while (targetElement.firstChild) {
+        targetElement.removeChild(targetElement.firstChild);
+      }
+    }
+
+    var previousElement = targetElement;
+    for (var i=0;i<overallStructure.length;i++) {
+      var level_definition = overallStructure[i];
+      var level_element_tag = level_definition[0];
+      var level_element = document.createElement(level_element_tag);
+      var attribute_dictionary = level_definition[1];
+      for (var attribute_key in attribute_dictionary) {
+        level_element.setAttribute(attribute_key, attribute_dictionary[attribute_key]);
+      }
+
+      /* need to place title structure */
+      if (titleStructure && titleStructure[0] == i) {
+        var title_element_tag = titleStructure[1];
+        var title_element = document.createElement(title_element_tag);
+        var title_attribute_dictionary = titleStructure[2];
+        var title_text_content = titleStructure[3];
+        for (var title_attribute_key in title_attribute_dictionary) {
+          title_element.setAttribute(title_attribute_key, title_attribute_dictionary[title_attribute_key]);
+        }
+
+        var title_text_node = document.createTextNode(title_text_content);
+        title_element.appendChild(title_text_node);
+
+
+        level_element.appendChild(title_element);
+      }
+
+      /* last level place links */
+      if (i == overallStructure.length-1) {
+        for (var link_i=0; link_i < links.length; link_i++) {
+          var link = links[link_i];
+          for (var linkStructureIndex=0;linkStructureIndex < linkStructure.length; linkStructureIndex++) {
+            BELinkBlockGenerator.generateIndividualLinks(level_element, linkStructure[linkStructureIndex], link)
+          }
+        }
+      }
+
+      /* first level child we need to check placement */
+      if (previousElement == targetElement) {
+        if (replacementStrategy == BELinkBlockGenerator.REPLACEMENT_STRATEGY_PRE_APPEND_ELEMENT) {
+          /* 2 means insert right before */
+          previousElement.insertBefore(level_element, targetElement.firstChild);
+        } else if (replacementStrategy == BELinkBlockGenerator.REPLACEMENT_STRATEGY_PRE_APPEND_PARENT) {
+          /* 3 means insert right before at parent level */
+          var parentElement = previousElement.parentElement;
+          parentElement.insertBefore(level_element, previousElement);
+        } else {
+          previousElement.appendChild(level_element);
+        }
+      } else {
+        previousElement.appendChild(level_element);
+      }
+      previousElement = level_element;
+    }
+  };
+}(window.BELinkBlockGenerator = window.BELinkBlockGenerator || {}))
+};
+</script>
+
+<style>
+.be-ix-link-block .be-related-link {
+  padding: 15px;
+}
+</style>
+
+    <script>
+      (function() {
+      var bec = document.createElement('script');
+      bec.type = 'text/javascript';
+      bec.async = true;
+      bec.setAttribute("data-id", "bec");
+      bec.setAttribute("org-id", "f00000000049116");
+      bec.setAttribute("domain", ".lhw.com");
+      bec.setAttribute("session-timeout", 86400000);
+      bec.src = document.location.protocol + '//cdn.b0e8.com/conv_v3.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(bec, s);
+})();
+</script>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script type="text/javascript" src="//7210264.collect.igodigital.com/collect.js"></script>
+
+    <title>Luxury Hotels and Resorts : Leading Hotels of the World</title>
+    <meta name="description" content="Luxury Hotels at The Leading Hotels of the World. Your source for everything from  luxury vacation packages, spa and golf resorts to safari getaways." />
+    <meta name="keywords" content="" />
+    <meta property="og:image" content="https://static-new.lhw.com/App_Themes/global/images/Facebook_LHW_logo.jpg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Luxury Hotels and Resorts : Leading Hotels of the World" />
+    <meta property="og:url" content="https://www.lhw.com/" />
+    <meta property="og:description" content="Luxury Hotels at The Leading Hotels of the World. Your source for everything from  luxury vacation packages, spa and golf resorts to safari getaways." />
+    <meta property="fb:app_id" content="436726503049084" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="google" content="notranslate" />
+    <link rel="stylesheet" href="//static-new.lhw.com/Assets/p/css/fonts.min.css?44000">
+    
+    <link href="//static-new.lhw.com/Assets/p/css/global.min.css?44000" rel="stylesheet" />
+        <link href="//static-new.lhw.com/Assets/p/css/pages/home.min.css?44000" rel="stylesheet" />
+    
+    <link rel="alternate" hreflang="en" href="https://www.lhw.com/" />
+    <link rel="alternate" hreflang="ja" href="https://jp.lhw.com/" />
+    <link rel="alternate" hreflang="de" href="https://de.lhw.com/" />
+    <link rel="alternate" hreflang="it" href="https://it.lhw.com/" />
+    <link rel="alternate" hreflang="es" href="https://es.lhw.com/" />
+    <link rel="alternate" hreflang="fr" href="https://fr.lhw.com/" />
+</head>
+<body class="tier-guest">
+
+<!-- be_ixf, bodystr, _body_open -->
+
+    <script type='text/javascript'>
+dataLayer = window.dataLayer = window.dataLayer || [];
+dataLayer.push({"event":"lhw-member-data","membership-data":{"member-points":"","membership-status":"","membership-id":"","membership-type":"Non_LC","member-since":"","product-code":"","hgm-indicator":0},"user-data":{"logged-in":false,"userId":""}});
+</script>
+<script type='text/javascript'>
+dataLayer = window.dataLayer = window.dataLayer || [];
+dataLayer.push({"event":"push-hotel-code","hotelCode":""});
+</script>
+
+<!-- Google Tag Manager -->
+<noscript>
+    <iframe src="//www.googletagmanager.com/ns.html?id=GTM-5MFRNC" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+</noscript>
+<script type="text/javascript">
+    (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            'gtm.start': new Date().getTime(),
+            event: 'gtm.js'
+        });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-5MFRNC');
+</script>
+        <script type="text/javascript">
+            window.dataLayer = window.dataLayer || [];
+            var eventIndex = window.dataLayer.findIndex((event) => event.event === 'push-hotel-code');
+            var storageValue = sessionStorage.getItem('push-hotel-code');
+            if (eventIndex !== -1 && storageValue) {
+                window.dataLayer[eventIndex].hotelCode = storageValue;
+            }
+        </script>
+
+<!-- End Google Tag Manager -->
+
+
+
+
+    <!--   PRINT HEADER   -->
+    <div class="print-header" style="display:none;">
+        <img src="/Assets/d/images/global/logo-print.svg"/>
+    </div>
+    <!--   HEADER   -->
+    <header id="header" class="header ">
+        <div class="container tier-border">
+            <nav class="navbar navbar-expand-lg topnav">
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#userAccountNavMobile" aria-controls="userAccountNavMobile" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+                    <a class="navbar-brand" href="/">
+                        <svg class="svg-icon"><use xlink:href="#lhw-horz-logo"></use></svg>
+                    </a>
+
+                <!-- Mobile Only Nav Items -->
+                <div class="user-icons">
+                        <a class="logoball" href="/login">
+                            <img class="svg-icon logoball" src="//static-new.lhw.com/-/media/Images/Loyalty/Global/Icons/user-unauthenticated.svg">
+                        </a>
+                    <a class="cart" href="/booking/shopping-cart">
+                            <svg class="svg-icon"><use xlink:href="#icon-cart"></use></svg>
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse alt-navbar-collapse" id="userAccountNav">
+                    <div class="navbar topnav mobile-expanded-nav">
+                        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#userAccountNav" aria-controls="userAccountNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                        </button>
+                        <h6 class="nav-title">My Account</h6>
+                    </div>
+                    <div class="col user-info">
+                        <h8 class="welcome tier-color">Welcome Back</h8>
+                        <h4 class="name"></h4>
+
+
+                    </div>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link " href="/account/dashboard" data-tracking-id="my-dashboard">
+                                My Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/account/reservations" data-tracking-id="my-reservations">
+                                My Reservations
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/offers" data-tracking-id="special-offers">
+                                Special Offers
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/account/profile" data-tracking-id="my-profile">
+                                My Profile
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/leaders-club/about" data-tracking-id="about-leaders-club">
+                                About Leaders Club
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="extra-info">
+                        <p class="title">Customer Service</p>
+                        <p>US & Canada 1-800-745-8883</p>
+                        <a href="/logout.ashx" class="btn btn-link btn-arrow btn-logout">Logout</a>
+                    </div>
+                </div>
+                <!-- End Mobile Only Nav Items -->
+
+                <div class="collapse navbar-collapse" id="userAccountNavMobile">
+                    <div class="navbar-wrapper">
+                        <div class="navbar topnav mobile-expanded-nav d-lg-none tier-border">
+                            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#userAccountNavMobile" aria-controls="userAccountNavMobile" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                            </button>
+                                <a class="navbar-brand" href="/">
+                                    <svg class="svg-icon"><use xlink:href="#lhw-horz-logo"></use></svg>
+                                </a>
+                        </div>
+
+                        <!--AUTH-->
+                            <!--UNAUTH-->
+                            <ul class="navbar-nav secondary">
+                                <li class="nav-item travel-advisors">
+                                    <a href="https://www.lhw.com" class="nav-link" target="_blank">
+                                        <svg class="svg-icon"><use xlink:href="#icon-travel-advisors"></use></svg>
+                                        Travel Advisors
+                                    </a>
+                                </li>
+                                <li class="nav-item customer-care">
+                                    <a class="nav-link" href="/customer-care">
+                                        <svg class="svg-icon"><use xlink:href="#icon-customer-care"></use></svg>
+                                        Help
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="dropdownLanguage" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <svg class="svg-icon"><use xlink:href="#icon-language"></use></svg>
+English                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-language-toggle" aria-labelledby="dropdownLanguage">
+                                        <a href="https://www.lhw.com/" tabindex="0"
+                                           class="dropdown-item active"
+                                           data-lang="en">English</a>
+                                        <a href="https://jp.lhw.com/" tabindex="0"
+                                           class="dropdown-item "
+                                           data-lang="ja">日本語</a>
+                                        <a href="https://de.lhw.com/" tabindex="0"
+                                           class="dropdown-item "
+                                           data-lang="de">Deutsch</a>
+                                        <a href="https://fr.lhw.com/" tabindex="0"
+                                           class="dropdown-item "
+                                           data-lang="fr">Fran&#231;ais</a>
+                                        <a href="https://it.lhw.com/" tabindex="0"
+                                           class="dropdown-item "
+                                           data-lang="it">Italiano</a>
+                                        <a href="https://es.lhw.com/" tabindex="0"
+                                           class="dropdown-item "
+                                           data-lang="es">Espa&#241;ol</a>
+                                        <a href="https://www.lhw.cn" tabindex="0"
+                                           class="dropdown-item "
+                                           data-lang="cn">中文</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown login">
+                                    <a class="nav-link dropdown-toggle" href="#" id="dropdownLogin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Log In
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-login" aria-labelledby="dropdownLogin">
+<form action="/login" class="form" id="loginDropdownForm" method="post">
+    <input id="scController" name="scController" type="hidden" value="Login" /><input id="scAction" name="scAction" type="hidden" value="LoginDropdown" />
+    <h6 class="title">Log In</h6>
+    <div class="form-group">
+        <label for="Email">Email</label>
+        <input class="form-control" data-msg-complexEmail="Please enter a valid email address." data-msg-email="Please enter a valid email address." data-msg-required="&lt;i />" data-rule-email="true" data-rule-required="true" id="EmailDropdownInput" name="EmailDropdownInput" tabindex="1" type="text" value="" /> 
+        <span class="field-validation-valid" data-valmsg-for="EmailDropdownInput" data-valmsg-replace="true"></span>
+    </div>
+    <div class="form-group">
+        <label for="Password">Password</label>
+        <input autocomplete="off" class="form-control" data-msg="&lt;i />" data-password-toggle="" id="PasswordDropdownInput" maxlength="16" name="PasswordDropdownInput" tabindex="2" type="password" />
+        <span class="field-validation-valid" data-valmsg-for="PasswordDropdownInput" data-valmsg-replace="true"></span>
+        <a href="/login?fp=true" class="forgot-pass">Forgot your password?</a>
+    </div>
+    <div class="buttons">
+        <button type="submit" class="btn btn-primary btn-submit">
+            Log In
+        </button>
+    </div>
+    <p class="sign-up">
+        
+        Don&#39;t Have An Account? <a tabindex="3" href="/account/membership-signup">Join Now</a>
+    </p>
+</form>
+                                    </div>
+                                </li>
+                                <li class="nav-item sign-up">
+                                    
+                                    <a class="btn nav-btn" href="/account/membership-signup" tabindex="0">
+                                        Join Now
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown find-reservation">
+                                    <a class="nav-link" href="#" id="dropdownFindReservation" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <svg class="svg-icon"><use xlink:href="#icon-find-reservation"></use></svg>
+                                        <span>
+                                            Find a Reservation
+                                        </span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-find-reservation" aria-labelledby="dropdownFindReservation">
+                                        <form class="form">
+                                            <div class="form-group">
+                                                <p>Enter your Confirmation # below to locate your booking.</p>
+                                                <input id="findReservationInput" type="text" class="form-control" />
+                                            </div>
+                                            <div class="buttons">
+                                                <a id="findReservationButton" class="btn btn-primary" href="/find-reservation?cn=">Find</a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </li>
+                                <li class="nav-item cart">
+                                    <a class="nav-link" href="/booking/shopping-cart">
+                                            <svg class="svg-icon"><use xlink:href="#icon-cart"></use></svg>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        <ul class="navbar-nav primary">
+                            <li class="nav-item dropdown-wrapper">
+                                <a class="nav-link dropdown-toggle" href="/find-a-hotel" id="dropdownFindHotel" data-tracking-id="find-a-hotel" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Find a Hotel
+                                </a>
+                                <div class="dropdown-menu-wrapper dropdown-find-hotel" aria-labelledby="dropdownFindHotel">
+                                    <div class="dropdown-menu">
+                                        <div class="row d-none d-lg-flex">
+                                            <div class="col col-12 col-lg-4">
+                                                <a tabindex="0" data-toggle="modal" data-target="#modalPropertySearch" data-tracking-id="find-a-hotel-search-destinations" >
+                                                    <img data-src="//static-new.lhw.com/-/media/Images/Loyalty/Global/Header/SD-LW1630_10064695_Beat_Brechb_Hl_Luzern_Tourismus_260x195.jpg" class="d-none d-lg-block lazy" />
+                                                    <h8>Search Destinations</h8>
+                                                </a>
+                                            </div>
+                                            <div class="col col-12 col-lg-4">
+                                                <a href="/find-a-hotel" data-tracking-id="find-a-hotel-browse-by-map">
+                                                    <img data-src="//static-new.lhw.com/-/media/Images/Loyalty/Global/Header/browse-by-map.jpg" class="d-none d-lg-block lazy" />
+                                                    <h8>Browse By Map</h8>
+                                                </a>
+                                            </div>
+                                            <div class="col col-12 col-lg-4">
+                                                <a href="/find-a-hotel/browse-by-list" data-tracking-id="find-a-hotel-browse-by-list">
+                                                    <img data-src="//static-new.lhw.com/-/media/Images/Loyalty/Global/Header/browse-by-list-header-jk-place-260x195.png" class="d-none d-lg-block lazy" />
+                                                    <h8>Browse By List</h8>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div id="headerPropertySearch" class="d-lg-none">
+                                            <property-search></property-search>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown-wrapper dropdown-with-accordion">
+                                <a class="nav-link dropdown-toggle" href="/get-inspired" id="dropdownGetInspired" data-tracking-id="get-inspired" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Get Inspired
+                                </a>
+                                <div class="dropdown-menu-wrapper dropdown-get-inspired" aria-labelledby="dropdownGetInspired">
+                                    <div class="dropdown-menu">
+                                        <div class="row multi-level-links" id="collapse-get-inspired">
+                                            <div class="col col-12 d-lg-none">
+                                                <a href="/get-inspired" data-tracking-id="get-inspired-overview">
+                                                    Overview
+                                                </a>
+                                            </div>
+                                            <div class="col col-12">
+
+
+                                                    <div class="row">
+                                                        <div class="col-12 col-lg-4 level1">
+                                                            <a class="link-arrow mobile-link-singular" data-toggle="collapse" data-target="#newHotelsL2" data-tracking-id="get-inspired-new-hotels" href="/get-inspired/new-hotels" aria-expanded="false" aria-controls="newHotelsL2">
+                                                                <span class="link-align"><span class="arrow">Trending</span></span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col-12 col-lg-8 level2">
+                                                            <div class="sub-menu collapse" id="newHotelsL2">
+                                                                <a href="/get-inspired/new-hotels" data-tracking-id="get-inspired-new-hotels-img">
+                                                                    <img data-src="//static-new.lhw.com/-/media/Images/Loyalty/Global/Header/Trending-Nayara-Gardens-Exterior-View_580x323.png" class="d-none d-lg-block lazy" />
+                                                                    <h8>Trending</h8>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div> <!-- newhotel -->
+                                                                                                    <div class="row">
+                                                        <div class="col-12 col-lg-4 level1">
+                                                            <a class="link-arrow" data-toggle="collapse" data-target="#collectionL2" data-tracking-id="get-inspired-collections" href="/get-inspired/collections" aria-expanded="false" aria-controls="collectionL2">
+                                                                <span class="link-align"><span class="arrow">Interests</span></span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col-12 col-lg-4 level2">
+                                                            <div class="sub-menu collapse" id="collectionL2">
+                                                                    <a class="link-arrow" href="/collections/mediterranean-hotels/hotels" data-tracking-id="get-inspired-collections-ff4602e0-581f-45ab-a6f6-b441271c14b9">
+                                                                        <span>Mediterranean Hotels</span>
+                                                                    </a>
+                                                                    <a class="link-arrow" href="/collections/hotels-with-villas" data-tracking-id="get-inspired-collections-6630ff1e-94c6-47af-b503-0b7fddff93c3">
+                                                                        <span>Hotels With Villas</span>
+                                                                    </a>
+                                                                    <a class="link-arrow" href="/collections/best-family-escapes" data-tracking-id="get-inspired-collections-ea251d11-fbda-4d04-85cc-caf4ba53a801">
+                                                                        <span>Best Family Escapes</span>
+                                                                    </a>
+                                                                    <a class="link-arrow" href="/collections/leading-hidden-gems" data-tracking-id="get-inspired-collections-ab98c99a-a4bd-47b6-a8a9-eaeb33a89fde">
+                                                                        <span>Hidden Gems</span>
+                                                                    </a>
+                                                                    <a class="link-arrow" href="/collections/holiday-markets" data-tracking-id="get-inspired-collections-0b4a5d21-4cdf-47ed-be5e-75b4e34dcc7d">
+                                                                        <span>Best Holiday Markets</span>
+                                                                    </a>
+                                                                <a class="btn btn-link" href="/get-inspired/collections" data-tracking-id="get-inspired-collections-view-all">View All</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-lg-4 level3">
+                                                            <div class="sub-menu collapse" id="CollectionL3">
+
+                                                                <img data-src="//static-new.lhw.com/-/media/Images/Collections/Hotels-With-Villas/Banner-Hi_LW1921_80033070_Signature_picture_Tortuga_Bay_hotel-220x160.jpg" class="d-none d-lg-block lazy" />
+                                                                <a class="btn btn-link" href="/collections/hotels-with-villas" data-tracking-id="get-inspired-collections-featured-6630ff1e-94c6-47af-b503-0b7fddff93c3">Hotels With Villas</a>
+                                                            </div>
+                                                        </div>
+                                                    </div> <!-- collections -->
+                                                                                                                                                    <div class="row">
+                                                        <div class="col-12 col-lg-4 level1">
+                                                            <a class="link-arrow mobile-link-singular" data-toggle="collapse" data-target="#destinationL2" data-tracking-id="get-inspired-destination-experiences" href="/stories/lhw-book-series" aria-expanded="false" aria-controls="destinationL2">
+                                                                <span class="link-align"><span class="arrow">The Book Series</span></span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col-12 col-lg-8 level2">
+                                                            <div class="sub-menu collapse" id="destinationL2">
+                                                                <a href="/stories/lhw-book-series" data-tracking-id="get-inspired-destination-experiences-img">
+                                                                    <img data-src="//static-new.lhw.com/-/media/Images/Loyalty/Global/Header/LHWbook_Nav_580x323.jpg" class="d-none d-lg-block lazy" />
+                                                                    <h8>The Book Series</h8>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div> <!-- destinations -->
+                                                                                                    <div class="row">
+                                                        <div class="col-12 col-lg-4 level1">
+                                                            <a class="link-arrow mobile-link-singular" data-toggle="collapse" data-target="#stacklaL2" data-tracking-id="get-inspired-stackla" href="/trending/stories" aria-expanded="false" aria-controls="stacklaL2">
+                                                                <span class="link-align"><span class="arrow">Stories</span></span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col-12 col-lg-8 level2">
+                                                            <div class="sub-menu collapse" id="stacklaL2">
+                                                                <a href="/trending/stories" data-tracking-id="get-inspired-stackla-img">
+                                                                    <img data-src="//static-new.lhw.com/-/media/Images/Loyalty/Global/Header/STORIES_Camilla_580x323.jpg" class="d-none d-lg-block lazy" />
+                                                                    <h8>Stories</h8>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div> <!-- stackla -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown-wrapper">
+                                <a class="nav-link dropdown-toggle" href="/offers" id="dropdownOffers" data-tracking-id="offers" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Offers
+                                </a>
+                                <div class="dropdown-menu-wrapper dropdown-offers" aria-labelledby="dropdownOffers">
+                                    <div class="dropdown-menu">
+                                        <div class="row">
+                                                <div class="col col-12 col-lg-4">
+                                                    <a href="/offers/full-board" data-tracking-id="offers-876c98d8-6697-4eb5-9815-ed566c31d923">
+                                                        <img data-src="//static-new.lhw.com/-/media/Images/Offers/LFB-Full-Board/LFB_Full-Board_260x190-(1).jpg" class="d-none d-lg-block lazy" />
+                                                        <h8>Culinary Delight: Full Board </h8>
+                                                    </a>
+                                                </div>
+                                                <div class="col col-12 col-lg-4">
+                                                    <a href="/offers/half-board" data-tracking-id="offers-d7636c45-b548-4c44-8a0e-bd84b5daf254">
+                                                        <img data-src="//static-new.lhw.com/-/media/Images/Offers/LHB-Half-Board/LHB_HalfBoard_260x190_v2.jpg" class="d-none d-lg-block lazy" />
+                                                        <h8>Culinary Delight: Half Board </h8>
+                                                    </a>
+                                                </div>
+                                                <div class="col col-12 col-lg-4">
+                                                    <a href="/offers/breakfast-inclusive" data-tracking-id="offers-6410b97d-a631-4c19-b648-b7f828fac477">
+                                                        <img data-src="//static-new.lhw.com/-/media/Images/Offers/L05-Breakfast-Inclusive/L05_Bfst-Incl_260x190-(1).jpg" class="d-none d-lg-block lazy" />
+                                                        <h8>Culinary Delight: Breakfast Inclusive</h8>
+                                                    </a>
+                                                </div>
+                                        </div>
+                                        <div class="dropdown-footer">
+                                            <a href="/offers" class="btn btn-link btn-arrow" data-tracking-id="offers-view-all">View All Offers</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown-wrapper">
+                                <a class="nav-link dropdown-toggle" href="/leaders-club" id="dropdownLeadersClub" data-tracking-id="leaders-club" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Leaders Club
+                                </a>
+                                <div class="dropdown-menu-wrapper dropdown-leaders-club" aria-labelledby="dropdownLeadersClub">
+                                    <div class="dropdown-menu">
+                                        <div class="row">
+                                                    <div class="col col-12 col-lg-4">
+                                                            <a href="/offer.aspx?oid=E672ACA6-B5C0-40EA-8056-4B21BC5490EC" data-tracking-id="leaders-club-9b4e7e62-e50a-4dda-b1b4-58d2cf5716d1">
+                                                                <img data-src="//static-new.lhw.com/-/media/Images/Navigation/Leaders-Club/240x130_LW1320_100227760.jpg" class="d-none d-lg-block lazy" />
+                                                                <h8>Exclusive Room Rates</h8>
+                                                            </a>
+                                                        <p>Members save up to 20% on our best available room rates.</p>
+                                                    </div>
+                                                    <div class="col col-12 col-lg-4">
+                                                            <a href="/leaders-club/how-it-works" data-tracking-id="leaders-club-9fef10d7-f628-421e-89c3-8df47101873b">
+                                                                <img data-src="//static-new.lhw.com/-/media/Images/Navigation/Leaders-Club/240x130_LW7043_78773858.jpg" class="d-none d-lg-block lazy" />
+                                                                <h8>How Leaders Club Works</h8>
+                                                            </a>
+                                                        <p>Learn how our members enhance every stay with Leaders Club.</p>
+                                                    </div>
+                                                    <div class="col col-12 col-lg-4">
+                                                            <a href="/leaders-club/benefits" data-tracking-id="leaders-club-cb3ce960-0143-4b20-a1ff-2670df7617a5">
+                                                                <img data-src="//static-new.lhw.com/-/media/Images/Navigation/Leaders-Club/240x130_GI_478169349.jpg" class="d-none d-lg-block lazy" />
+                                                                <h8>Become a Member</h8>
+                                                            </a>
+                                                        <p>Make every journey more memorable with benefits designed to celebrate your passion for travel.</p>
+                                                    </div>
+                                        </div>
+                                            <div class="dropdown-footer">
+                                                <a href="/leaders-club/about" class="btn btn-link btn-arrow" data-tracking-id="leaders-club-learn-more">Learn more about Leaders Club</a>
+                                                <p>Don't have a Leaders Club account? <a href="/account/membership-signup" data-tracking-id="leaders-club-join-now">Join Now</a></p>
+                                            </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+<input id="hfLoggedInStatus" name="hfLoggedInStatus" type="hidden" value="Not_Logged_In" />
+<input id="hfLCMembership" name="hfLCMembership" type="hidden" value="Non_LC" />
+<input id="hfFilterIp" name="hfFilterIp" type="hidden" value="false" />
+
+
+
+
+<script type="text/javascript">
+    if (!window.appData) {
+        window.appData = {"config":{"cookieDomain":".lhw.com","currentLocale":"en-us","currentCulture":"en","langPrefCookieName":"langpref","staticResourceBaseUrl":"//static-new.lhw.com/","defaultCurrency":"HOTEL","urls":{"chineseHostUrl":null,"englishHostUrl":null,"frenchHostUrl":null,"germanHostUrl":null,"italianHostUrl":null,"japaneseHostUrl":null,"spanishHostUrl":null,"awsApiHostName":null,"hotelSelectRoomUrl":null}},"page":{"newSignup":false,"postback":false,"postbackFail":false,"postbackSuccess":false,"validationFail":false,"renewal":false,"upgrade":false,"redirectUrl":null,"enableCheckoutSummary":false,"guestCheckout":false,"requireAccountForBooking":false,"searchTerm":null,"timeSeed":0},"settings":{},"localization":{"checkIn":"Check-In","checkOut":"Check-Out","regions":"Regions","countries":"Countries","cities":"Cities","hotel":"Hotel","hotels":"Hotels","maximumStayMessage":"Hotel stays are limited to {0} days","minimumStayRequired":"Minimum {0} night stay required","required":"Required","unavailableMessage":"You cannot select this date because {0} is unavailable","closedOnArrivalMessage":"Unable to check-in on this date.","from":"From","or":"or","points":"Points","hotelDetails":"Hotel Details","reserve":"Reserve","night":"Night"}}
+    }
+</script>
+
+    <div id="page" >
+        
+
+
+<div id="propertySearchBar" class="property-searchbar home-prop-search">
+    <property-search></property-search>
+</div>
+
+<div class="page home-page">
+
+        <!-- CAROUSEL -->
+        <div class="home-car">
+            <div class="hero-carousel-responsive owl-carousel">
+                        <div class="hero-slide" data-tracking-id="carousel-ffce1e76-ba39-4162-92f4-7105d7b8c2c2">
+                            <picture class="hero-image">
+                                <source media="(min-width: 1025px)" data-srcset="//static-new.lhw.com/-/media/Images/New-Homepage/Global-Campaigns/2024/BAN_CNT-Awards_Adare-Manor_HPB_1400x720.png">
+                                <source media="(min-width: 768px)" data-srcset="//static-new.lhw.com/-/media/Images/New-Homepage/Global-Campaigns/2024/BAN_CNT-Awards_Adare-Manor_HPB_1024x720.png">
+                                <source media="(min-width: 576px)" data-srcset="//static-new.lhw.com/-/media/Images/New-Homepage/Global-Campaigns/2024/BAN_CNT-Awards_Adare-Manor_HPB_768x720.png">
+                                <img class="lazyload" data-srcset="//static-new.lhw.com/-/media/Images/New-Homepage/Global-Campaigns/2024/BAN_CNT-Awards_Adare-Manor_HPB_320x300.png" alt="Hotel">
+                            </picture>
+                            <span class="shadow"></span>
+                                <div class="image-content">
+                                    <div class="image-info">
+                                            <a href="/hotel/Adare-Manor-Adare-Ireland" target="" data-tracking-id="carousel-ffce1e76-ba39-4162-92f4-7105d7b8c2c2">
+                                                <h8>Adare Manor</h8>
+                                                    <p>Adare, Ireland</p>
+                                            </a>
+                                    </div>
+                                </div>
+                            <div class="slide-content">
+                                <div class="slide-copy">
+                                    <h3>Readers' Choice Awards 2024</h3>
+                                    <p>The world's top hotels right now—named by readers of Condé Nast Traveler</p>
+                                    <a href="/collections/readers-choice-awards?ext2=2024cntrca" class="slide-cta" target="" data-tracking-id="carousel-ffce1e76-ba39-4162-92f4-7105d7b8c2c2">Discover the Winners</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hero-slide" data-tracking-id="carousel-c00bf036-034b-47ae-b310-e22963b583a8">
+                            <picture class="hero-image">
+                                <source media="(min-width: 1025px)" data-srcset="//static-new.lhw.com/-/media/Images/New-Homepage/Global-Campaigns/2024/BAN_Leading-Journeys-Saxon_1400x720.png">
+                                <source media="(min-width: 768px)" data-srcset="//static-new.lhw.com/-/media/Images/New-Homepage/Global-Campaigns/2024/BAN_Leading-Journeys-Saxon_1024x720.png">
+                                <source media="(min-width: 576px)" data-srcset="//static-new.lhw.com/-/media/Images/New-Homepage/Global-Campaigns/2024/BAN_Leading-Journeys-Saxon_768x720.png">
+                                <img class="lazyload" data-srcset="//static-new.lhw.com/-/media/Images/New-Homepage/Global-Campaigns/2024/BAN_Leading-Journeys-Saxon_320x300.png" alt="Hotel">
+                            </picture>
+                            <span class="shadow"></span>
+                                <div class="image-content">
+                                    <div class="image-info">
+                                            <a href="/hotel/Saxon-Hotel-Villas-Spa-Johannesburg-South-Africa" target="" data-tracking-id="carousel-c00bf036-034b-47ae-b310-e22963b583a8">
+                                                <h8>Saxon Hotel, Villas &amp; Spa</h8>
+                                                    <p>Johannesburg, South Africa</p>
+                                            </a>
+                                    </div>
+                                </div>
+                            <div class="slide-content">
+                                <div class="slide-copy">
+                                    <h3>Leading Journeys</h3>
+                                    <p>Embark on an uncommon adventure with packaged stays at multiple Leading Hotels</p>
+                                    <a href="/trending/leading-journeys?ext2=0924leadjourhpbv2" class="slide-cta" target="" data-tracking-id="carousel-c00bf036-034b-47ae-b310-e22963b583a8">Explore</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hero-slide" data-tracking-id="carousel-85d597d4-0de7-45dd-b191-e007f5aaefdf">
+                            <picture class="hero-image">
+                                <source media="(min-width: 1025px)" data-srcset="//static-new.lhw.com/-/media/Images/New-Homepage/New-Hotels/2024/Royal-Mansour-hpb_1400x720.png">
+                                <source media="(min-width: 768px)" data-srcset="//static-new.lhw.com/-/media/Images/New-Homepage/New-Hotels/2024/Royal-Mansour-hpb-1024x720.png">
+                                <source media="(min-width: 576px)" data-srcset="//static-new.lhw.com/-/media/Images/New-Homepage/New-Hotels/2024/Royal-Mansour-hpb-768x720.png">
+                                <img class="lazyload" data-srcset="//static-new.lhw.com/-/media/Images/New-Homepage/New-Hotels/2024/Royal-Mansour-hpb-320x300.png" alt="Hotel">
+                            </picture>
+                            <span class="shadow"></span>
+                                <div class="image-content">
+                                    <div class="image-info">
+                                            <a href="/hotel/Royal-Mansour-Casablanca-Morocco" target="" data-tracking-id="carousel-85d597d4-0de7-45dd-b191-e007f5aaefdf">
+                                                <h8>Royal Mansour Casablanca</h8>
+                                                    <p>Casablanca, Morocco</p>
+                                            </a>
+                                    </div>
+                                </div>
+                            <div class="slide-content">
+                                <div class="slide-copy">
+                                    <h3>New To</br>Leading Hotels</h3>
+                                    <p>A midcentury icon reborn, the Royal Mansour Casablanca comes alive with its original 1952 art-deco elegance and the vibrant ambiance of a dynamic gastronomy scene.</p>
+                                    <a href="/property.aspx?pid=3E3C75A2-9EEF-4EB3-AA57-3C4B120125E8&amp;ext2=nhhp10246008" class="slide-cta" target="" data-tracking-id="carousel-85d597d4-0de7-45dd-b191-e007f5aaefdf">View Hotel</a>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+
+    <div class="home-experience container">
+        <h4>Pursue the Remarkable</h4>
+        <h9>Discover the experiences that forever spark the spirit and inspire the soul.</h9>
+        <div class="row">
+                    <div class="col-sm-12 col-md-4">
+                        <div class="mkr-photo-grid-item">
+                            <div class="mkr-photo-grid-item-inner">
+                                <a target="" href="/trending/apres-ski?ext2=1024skitout" data-tracking-id="tout-bb2f44ce-bb4c-4fd8-971c-7fa070e5e7b0">
+                                    <div class="mkr-photo-overlay">
+                                        <div class="mkr-box-content">
+                                            <p>These sought-after skiing destinations offer the ultimate winter experience on and off the slopes.</p>
+                                        </div>
+                                        <span class="tout-arrow"></span>
+                                    </div>
+                                    <div class="mkr-box-city">
+                                        <h5>Apr&#232;s-ski Experiences</h5>
+                                    </div>
+                                    <img class="experience-lazy" data-src="//static-new.lhw.com/-/media/Images/New-Homepage/Touts/2024/apres_ski_tout_300x300.png" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <div class="mkr-photo-grid-item">
+                            <div class="mkr-photo-grid-item-inner">
+                                <a target="" href="/collections/wintry-experiences?ext2=1024winttout" data-tracking-id="tout-b5469468-6406-4f06-9f7c-42c2ace27433">
+                                    <div class="mkr-photo-overlay">
+                                        <div class="mkr-box-content">
+                                            <p>Keep this above-sea-level collection at the top of your list for your next alpine adventure.</p>
+                                        </div>
+                                        <span class="tout-arrow"></span>
+                                    </div>
+                                    <div class="mkr-box-city">
+                                        <h5>Winter Experiences</h5>
+                                    </div>
+                                    <img class="experience-lazy" data-src="//static-new.lhw.com/-/media/Images/New-Homepage/Touts/2024/winter_destinations_tout_300x300.png" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <div class="mkr-photo-grid-item">
+                            <div class="mkr-photo-grid-item-inner">
+                                <a target="" href="/offers/search/spa-inclusive?ext2=1024spatout" data-tracking-id="tout-d1c762e5-bcb3-4efc-a324-5d27ccd104b5">
+                                    <div class="mkr-photo-overlay">
+                                        <div class="mkr-box-content">
+                                            <p>Rejuvenate your body and mind with an exceptional spa treatment during your stay.</p>
+                                        </div>
+                                        <span class="tout-arrow"></span>
+                                    </div>
+                                    <div class="mkr-box-city">
+                                        <h5>Spa-Inclusive Stays</h5>
+                                    </div>
+                                    <img class="experience-lazy" data-src="//static-new.lhw.com/-/media/Images/New-Homepage/Touts/2024/spa_inclusive_tout_300x300.png" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+    </div>
+
+        <!-- WEB RECS -->
+        <div class="next-adventure home-inspired" id="exploreWebRecommendations">
+            <div class="intro container">
+                <h4>WHERE TO NEXT?</h4>
+                <p>COMPRISED OF MORE THAN 400 HOTELS IN OVER 80 COUNTRIES, LEADING HOTELS' DISTINCT PROPERTIES MAKE UP<BR>A COLLECTION OF INDEPENDENT AND UNCOMMON LUXURY HOTELS THROUGHOUT THE WORLD.</p>
+            </div>
+            <web-recommendations inline-template data-url="//7210264.recs.igodigital.com/a/v2/7210264/home/recommend.json" :use-large-images="true">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-6" v-for="(section, sIndex) in data" v-bind:class="{ 'panners-left': sIndex==0, 'panners-right': sIndex==1 }">
+                                <h9><span>{{section.title}}</span></h9>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-6" v-for="item in section.items">
+                                    <div class="tile-wrap">
+                                        <a v-bind:href="item.link" class="panner">
+                                            <span class="l-target"></span>
+                                            <span class="r-target"></span>
+                                            <img class="lazy" v-bind:data-src="item.image_link" />
+
+                                            <span class="tile-title">
+                                                <span class="info-wrap">
+                                                    <span class="arrow"></span>
+                                                    <span class="prop-name">{{item.name}}</span>
+                                                    <span class="prop-loc">{{item.formattedCityCountry}}</span>
+                                                </span>
+                                            </span>
+                                            <span class="pan-indicator"></span>
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </web-recommendations>
+        </div>
+
+
+</div>
+
+    </div>
+    
+    <!--   FOOTER   -->
+    <footer id="footer" class="footer">
+        <div class="container">
+            <div class="row">
+                <!--Mobile Only Logo-->
+                <div class="col-12 d-lg-none lhw-logo">
+                    <img data-src="//static-new.lhw.com/Assets/p/images/global/logo-footer.png" alt="The Leading Hotels of the World" class="lazy"/>
+                </div>
+
+                <div class="col col-6 col-md-4 col-lg-3 corporate">
+                    <!--Desktop Only Logo-->
+                    <div class="d-none d-lg-block lhw-logo">
+                        <img data-src="//static-new.lhw.com/Assets/p/images/global/logo-footer.png" alt="The Leading Hotels of the World" class="lazy"/>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li><a href="/leaders-club/our-promise">Our Difference</a></li>
+                        <li><a href="/corporate/about-us">Our Company</a></li>
+                            <li><a href="/stories/leading-with-a-purpose">Leading With A Purpose</a></li>
+                                                    <li><a href="/trending/sustainability-leaders">Sustainability Leaders</a></li>
+                        <li><a href="https://careers.hosco.com/en/lhw">Careers</a></li>
+                        <li><a href="/sitemap">Sitemap</a></li>
+                    </ul>
+                </div>
+
+                <div class="col col-6 col-md-4 col-lg-3 locations">
+                    <h8 class="title">Locations</h8>
+                    <ul class="list-unstyled">
+                        <li><a href="/find-a-hotel/browse-by-list">Browse By List</a></li>
+                        <li><a href="/find-a-hotel">Browse By Map</a></li>
+                    </ul>
+                    <h8 class="title">Partners &amp; Press</h8>
+                    <ul class="list-unstyled">
+                            <li><a href="https://www.lhw.com" target="_blank">Travel Advisors</a></li>
+                                                    <li><a href="https://surveys.lhw.com/jfe/form/SV_aa6bNgUZngnPOFU" target="_blank">Become a Leading Hotel</a></li>
+                        <li><a href="/press-center">Press Center</a></li>
+                    </ul>
+                    
+
+                    
+                    <div class="be-ix-link-block"></div>
+                </div>
+
+                <div class="col col-12 col-lg-3 reservations">
+                    <h8 class="title">For Reservations</h8>
+                    <svg class="svg-icon"><use xlink:href="#icon-phone"></use></svg>
+                    <ul class="list-unstyled reservation-call-list">
+                        <li>
+                            U.S.A. &amp; Canada
+                            <span class="number">Call:  <a href="tel:18007458883">1 800 745 8883 </a></span>
+                        </li>
+                        <li>
+                            Austria, Belgium, France, Germany, Ireland, Netherlands, Norway, Spain, Switzerland, UK
+                            <span class="number">Call:  <a href="tel:0080010101111">00800 10 10 11 11 </a></span>
+                        </li>
+                        <li>
+                            Japan
+                            <span class="number">Call:  <a href="tel:0120086230">0120-086-230 toll free</a></span>
+                        </li>
+                        <li><a class="other" href="/customer-care">All Other Countries</a></li>
+                    </ul>
+                </div>
+
+                <div class="col col-12 col-md-4 col-lg-3 connect">
+                    <h8 class="title">Connect With LHW</h8>
+                    <ul class="list-unstyled social-list">
+                        <li>
+                            <a href="http://www.facebook.com/LeadingHotels" title="Facebook" target="_blank" rel="noopener">
+                                <svg class="svg-icon"><use xlink:href="#icon-facebook"></use></svg>
+                                <span class="d-none d-md-inline">Facebook</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://twitter.com/LeadingHotels" title="Twitter" target="_blank" rel="noopener">
+                                <svg class="svg-icon"><use xlink:href="#icon-twitter"></use></svg>
+                                <span class="d-none d-md-inline">Twitter</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/leadinghotelsoftheworld/" title="https://www.instagram.com/leadinghotelsoftheworld/" target="_blank" rel="noopener">
+                                <svg class="svg-icon"><use xlink:href="#icon-instagram"></use></svg>
+                                <span class="d-none d-md-inline">Instagram</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://www.youtube.com/user/LeadingHotelsVideo" title="YouTube" target="_blank" rel="noopener">
+                                <svg class="svg-icon"><use xlink:href="#icon-youtube"></use></svg>
+                                <span class="d-none d-md-inline">YouTube</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://pinterest.com/leadinghotels/" title="Pinterest" target="_blank" rel="noopener">
+                                <svg class="svg-icon"><use xlink:href="#icon-pinterest"></use></svg>
+                                <span class="d-none d-md-inline">Pinterest</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="legal">
+                <span class="copyright">THE LEADING HOTELS OF THE WORLD &#174;</span>
+                <a href="/privacy-policy">Privacy Policy</a>
+                <a href="/terms-and-conditions">Terms &amp; Conditions</a>
+                <a href="/cookie-policy">Cookie Policy</a>
+            </div>
+        </div>
+    </footer>
+
+
+
+<!-- TRAINING MODAL -->
+<div class="modal fade" id="modalGeneric" tabindex="-1" role="dialog" aria-labelledby="modalGeneric" aria-hidden="true"></div>
+
+
+<!-- PROPERTY SEARCH MODAL -->
+<div class="modal fade modal-property-search" id="modalPropertySearch" tabindex="-1" role="dialog" aria-labelledby="modalPropertySearch" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Where Do You Want To Go?</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="form" id="propertySearchModalForm">
+                <div class="modal-body">
+                    <div id="propertySearch">
+                        <property-search></property-search>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- PROPERTY SEARCH -->
+<script type="text/x-template" id="property-search-template">
+    <div class="property-search">
+        <div class="row search-details">
+            <location-autocomplete inline-template ref="location-autocomplete" :app="autocomplete" v-on:update-from-autocomplete="updateFromAutocomplete">
+                <div class="col col-location">
+                    <label for="location">Hotel, City Or Country</label>
+                    <input value="" name="location" v-model="app.location" v-bind:placeholder="app.hasError ? localization.required : ''" type="text" class="form-control" v-bind:class="{'is-invalid': app.hasError && (app.location.length < app.minLocationChar)}" v-on:keyup.enter="$parent.submitSearch">
+                </div>
+            </location-autocomplete>
+
+            <!-- DATEPICKERS -->
+            <datepicker inline-template ref="datepicker" :app="datepicker.app" :reservation="datepicker.reservation" :localization="datepicker.localization" v-on:update-from-calendar="updateFromCalendar">
+                <div class="col col-datepickers">
+                    <div class="row">
+                        <div class="col col-checkin">
+                            <label for="checkin">Check-In</label>
+                            <div class="datepicker-active-icon custom-checkin-active"></div>
+                            <input class="checkin-calendar-alt form-control custom-checkin" v-model="app.checkInDate" name="checkin" type="text">
+                            <div class="datepicker-wrapper checkin"><div class="checkin-calendar"></div></div>
+                        </div>
+                        <div class="col col-checkout">
+                            <label for="checkout">Check-Out</label>
+                            <div class="datepicker-active-icon custom-checkout-active"></div>
+                            <input class="checkout-calendar-alt form-control custom-checkout" v-model="app.checkOutDate" name="checkout" type="text">
+                            <div class="datepicker-wrapper checkout"><div class="checkout-calendar"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </datepicker>
+
+            <div class="col col-rooms">
+                <label for="rooms">Rooms</label>
+                <select class="form-control custom-select" name="rooms" v-model.number="totalRooms" v-on:change="changeNumberOfRooms">
+                    <option v-for="n in 4">{{n}}</option>
+                </select>
+            </div>
+
+            <div class="col col-adults">
+                <label for="adults">Adults</label>
+                <select class="form-control custom-select" name="rooms" v-model.number="rooms[0].numAdults" v-show="totalRooms==1">
+                    <option v-for="n in 9">{{n}}</option>
+                </select>
+                <input class="form-control custom-select" v-model.number="totalAdults" readonly="true" v-show="totalRooms>1" v-on:click="showRoomList">
+            </div>
+
+            <div class="col col-children">
+                <label for="children">Children</label>
+                <input class="form-control custom-select" name="children" type="text" readonly="true" v-model.number="totalChildren" v-on:click="showRoomList">
+            </div>
+
+            <div class="col col-num-guests">
+                <label for="children">No. of Guests</label>
+                <input class="form-control custom-select" name="numguests" type="text" readonly="true" v-model.number="totalGuests" v-on:click="showRoomList">
+            </div>
+
+
+            <div class="col col-button">
+                <a tabindex="0" class="btn btn-sm btn-block btn-primary btn-submit" v-bind:class="{'btn-active': autocomplete.hasError==false && (autocomplete.location.length >= autocomplete.minLocationChar)}" v-on:click="submitSearch()">Search</a>
+            </div>
+        </div>
+
+        <transition v-on:enter="transitionEnter" v-on:leave="transitionLeave" :duration="transitionTime">
+            <div class="room-list" v-show="roomListVisible">
+                <hr />
+                <transition-group name="roomList" v-on:enter="transitionEnter" v-on:leave="transitionLeave" :duration="transitionTime">
+                    <div class="form-group" v-for="(room, rIndex) in rooms" v-bind:key="room.id">
+                        <div class="row">
+                            <div class="col col-room-name">
+                                <label>Room: {{rIndex+1}}</label>
+                            </div>
+                            <div class="col col-adults-drop">
+                                <label for="adultsDrop">Adults</label>
+                                <select class="form-control custom-select" name="adultsDrop" v-model.number="room.numAdults">
+                                    <option v-for="n in 9">{{n}}</option>
+                                </select>
+                            </div>
+                            <div class="col col-children-drop">
+                                <label for="childrenDrop">Children</label>
+                                <select class="form-control custom-select" name="childrenDrop" v-model.number="room.numChildren" v-on:change="changeNumberOfChildren(room)">
+                                    <option v-for="n in 11">{{n-1}}</option>
+                                </select>
+                            </div>
+                            <div class="col col-child-ages" v-show="room.numChildren>0">
+                                <label>Age Of Child</label>
+                                <div class="row">
+                                    <div class="col col-child-age-drop" v-for="(child, cIndex) in room.childAges">
+                                        <div class="form-group">
+                                            <select class="form-control custom-select" v-model.number="room.childAges[cIndex]">
+                                                <option v-for="n in 17">{{n}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </transition-group>
+                <div class="row">
+                    <div class="col col-button">
+                        <a class="btn btn-sm close-room-list" v-on:click="hideRoomList">Close</a>
+                    </div>
+                </div>
+            </div>
+        </transition>
+        <div class="row mobile-submit">
+            <div class="col">
+                <a tabindex="0" class="btn btn-sm btn-block btn-primary btn-submit" v-bind:class="{'btn-active': autocomplete.hasError==false && autocomplete.location.length}" v-on:click="submitSearch">Search</a>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!-- CURRENCY CONVERTER -->
+<script type="text/x-template" id="currency-converter-template">
+    <div id="currencyConverter" class="currency-converter">
+        <div class="dropdown">
+            <button type="button"
+                    id="currencyConverterDropdown"
+                    data-toggle="dropdown"
+                    data-flip="false"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    class="btn btn-dropdown"
+                    aria-invalid="false">
+                {{currencyDropdownText}}
+            </button>
+            <div aria-labelledby="currencyConverterDropdown" class="dropdown-menu">
+                <div class="group" v-for="group in groupedCurrencies" :key="group.groupName">
+                    <h8 class="subtitle">{{group.groupName}}</h8>
+                    <button type="button" class="dropdown-item" v-for="item in group.currencies" :key="item.code"
+                            v-on:click="setCurrency(item)">
+                        <span>{{item.name}}</span>
+                        <span>{{item.code}}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/javascript">
+    if (!window.appData) {
+        window.appData = {"config":{"cookieDomain":".lhw.com","currentLocale":"en-us","currentCulture":"en","langPrefCookieName":"langpref","staticResourceBaseUrl":"//static-new.lhw.com/","defaultCurrency":"HOTEL","urls":{"chineseHostUrl":null,"englishHostUrl":null,"frenchHostUrl":null,"germanHostUrl":null,"italianHostUrl":null,"japaneseHostUrl":null,"spanishHostUrl":null,"awsApiHostName":null,"hotelSelectRoomUrl":null}},"page":{"newSignup":false,"postback":false,"postbackFail":false,"postbackSuccess":false,"validationFail":false,"renewal":false,"upgrade":false,"redirectUrl":null,"enableCheckoutSummary":false,"guestCheckout":false,"requireAccountForBooking":false,"searchTerm":null,"timeSeed":0},"settings":{},"localization":{"checkIn":"Check-In","checkOut":"Check-Out","regions":"Regions","countries":"Countries","cities":"Cities","hotel":"Hotel","hotels":"Hotels","maximumStayMessage":"Hotel stays are limited to {0} days","minimumStayRequired":"Minimum {0} night stay required","required":"Required","unavailableMessage":"You cannot select this date because {0} is unavailable","closedOnArrivalMessage":"Unable to check-in on this date.","from":"From","or":"or","points":"Points","hotelDetails":"Hotel Details","reserve":"Reserve","night":"Night"}}
+    }
+</script>
+    
+    <script src="//static-new.lhw.com/Assets/p/js/global.min.js?44000"></script>
+    
+        <script src="//static-new.lhw.com/Assets/p/js/pages/home.min.js?44000"></script>
+    
+
+<script type='text/javascript'>
+// BEGIN COLLECT CODE
+_etmc.push(["setOrgId", "7210264"]);
+_etmc.push(["trackPageView"]);
+// END COLLECT CODE
+</script>
+        <!--BEGIN QUALTRICS WEBSITE FEEDBACK SNIPPET-->
+        <script type='text/javascript'>
+            (function () {
+                var g = function (e, h, f, g) {
+                    this.get = function (a) { for (var a = a + "=", c = document.cookie.split(";"), b = 0, e = c.length; b < e; b++) { for (var d = c[b]; " " == d.charAt(0);)d = d.substring(1, d.length); if (0 == d.indexOf(a)) return d.substring(a.length, d.length) } return null };
+                    this.set = function (a, c) { var b = "", b = new Date; b.setTime(b.getTime() + 6048E5); b = "; expires=" + b.toGMTString(); document.cookie = a + "=" + c + b + "; path=/; " };
+                    this.check = function () { var a = this.get(f); if (a) a = a.split(":"); else if (100 != e) "v" == h && (e = Math.random() >= e / 100 ? 0 : 100), a = [h, e, 0], this.set(f, a.join(":")); else return !0; var c = a[1]; if (100 == c) return !0; switch (a[0]) { case "v": return !1; case "r": return c = a[2] % Math.floor(100 / c), a[2]++, this.set(f, a.join(":")), !c }return !0 };
+                    this.go = function () { if (this.check()) { var a = document.createElement("script"); a.type = "text/javascript"; a.src = g; document.body && document.body.appendChild(a) } };
+                    this.start = function () { var t = this; "complete" !== document.readyState ? window.addEventListener ? window.addEventListener("load", function () { t.go() }, !1) : window.attachEvent && window.attachEvent("onload", function () { t.go() }) : t.go() };
+                };
+                try { (new g(100, "r", "QSI_S_ZN_abAdvLgxcd3VnXo", "//znabadvlgxcd3vnxo-lhw.siteintercept.qualtrics.com/SIE/?Q_ZID=ZN_abAdvLgxcd3VnXo")).start() } catch (i) { }
+            })();
+        </script><div id='ZN_abAdvLgxcd3VnXo'><!--DO NOT REMOVE-CONTENTS PLACED HERE--></div>
+        <!--END WEBSITE FEEDBACK SNIPPET-->
+
+        <!--BEGIN QUALTRICS SITE INTERCEPT-->
+        <script type='text/javascript'>
+                (function () {
+                    var g = function (e, h, f, g) {
+                        this.get = function (a) { for (var a = a + "=", c = document.cookie.split(";"), b = 0, e = c.length; b < e; b++) { for (var d = c[b]; " " == d.charAt(0) ;) d = d.substring(1, d.length); if (0 == d.indexOf(a)) return d.substring(a.length, d.length) } return null };
+                        this.set = function (a, c) { var b = "", b = new Date; b.setTime(b.getTime() + 6048E5); b = "; expires=" + b.toGMTString(); document.cookie = a + "=" + c + b + "; path=/; " };
+                        this.check = function () { var a = this.get(f); if (a) a = a.split(":"); else if (100 != e) "v" == h && (e = Math.random() >= e / 100 ? 0 : 100), a = [h, e, 0], this.set(f, a.join(":")); else return !0; var c = a[1]; if (100 == c) return !0; switch (a[0]) { case "v": return !1; case "r": return c = a[2] % Math.floor(100 / c), a[2]++, this.set(f, a.join(":")), !c } return !0 };
+                        this.go = function () { if (this.check()) { var a = document.createElement("script"); a.type = "text/javascript"; a.src = g + "&t=" + (new Date()).getTime(); document.body && document.body.appendChild(a) } };
+                        this.start = function () { var a = this; window.addEventListener ? window.addEventListener("load", function () { a.go() }, !1) : window.attachEvent && window.attachEvent("onload", function () { a.go() }) }
+                    };
+                    try { (new g(100, "r", "QSI_S_ZN_2mGIcYaONvcxNvn", "//zn2mgicyaonvcxnvn-lhw.siteintercept.qualtrics.com/WRSiteInterceptEngine/?Q_ZID=ZN_2mGIcYaONvcxNvn&Q_LOC=" + encodeURIComponent(window.location.href))).start() } catch (i) { }
+                })();
+        </script>
+        <div id='ZN_2mGIcYaONvcxNvn'><!--DO NOT REMOVE-CONTENTS PLACED HERE--></div>
+        <!--END SITE INTERCEPT-->
+
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'8d782cfc0e484f58',t:'MTcyOTc1NDEyNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

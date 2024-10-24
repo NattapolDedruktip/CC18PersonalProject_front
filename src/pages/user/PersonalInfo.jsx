@@ -16,17 +16,16 @@ function PersonalInfo() {
   const user = useAuthStore((state) => state.user);
   const token = useAuthStore((state) => state.token);
 
-  useEffect(() => {
-    getAllUserInfo(token).then((result) => {
-      console.log(result);
-      setUserData(result.data.user);
-      console.log("=================");
+  const getUserInfo = async () => {
+    const resp = await getAllUserInfo(token);
+    await setUserData(resp.data);
+  };
 
-      // if it return promise  you can solve with 2 way
-      // 1   wrap function  arrow other layer
-      // 2   use .then
-    });
+  useEffect(() => {
+    getUserInfo();
   }, []);
+
+  console.log(userData);
 
   // upload profile pic
   const fileInputRef = useRef(null);
@@ -70,7 +69,7 @@ function PersonalInfo() {
 
         await getAllUserInfo(token).then((result) => {
           // console.log(result);
-          setUserData(result.data.user);
+          setUserData(result.data);
         });
       },
       "base64"
@@ -86,6 +85,7 @@ function PersonalInfo() {
     });
   };
   // console.log(userData);
+  console.log(token);
   return (
     <div className=" mt-[11vh] bg-MyBg w-full h-[90vh] flex justify-center items-center text-white ">
       <div className="ml-60 flex flex-col gap-6 justify-center items-center w-2/5 h-fit  ">
@@ -125,46 +125,50 @@ function PersonalInfo() {
           <p className="font-body text-MainOrange text-4xl font-bold">
             FIRST NAME :{" "}
           </p>
-          <p>{userData.firstName}</p>
+          <p className="text-white text-4xl font-body ">{userData.firstName}</p>
         </div>
         <div className="flex gap-3">
           <p className="font-body text-MainOrange text-4xl font-bold">
             LAST NAME :{" "}
           </p>
-          <p>{userData.lastName}</p>
+          <p className="text-white text-4xl font-body ">{userData.lastName}</p>
         </div>
         <div className="flex gap-3">
           <p className="font-body text-MainOrange text-4xl font-bold">
             EMAIL :{" "}
           </p>
-          <p>{userData.email}</p>
+          <p className="text-white text-4xl font-body ">{userData.email}</p>
         </div>
         <div className="flex gap-3">
           <p className="font-body text-MainOrange text-4xl font-bold">
             DATE of Birth :{" "}
           </p>
-          <p>{userData?.dateOfBirth || "-"}</p>
+          <p className="text-white text-4xl font-body ">
+            {userData?.dateOfBirth || "-"}
+          </p>
         </div>
         <div className="flex gap-3">
           <p className="font-body text-MainOrange text-4xl font-bold">
             GENDER :{" "}
           </p>
-          <p>{userData.gender}</p>
+          <p className="text-white text-4xl font-body ">{userData.gender}</p>
         </div>
         <div className="flex gap-3">
           <p className="font-body text-MainOrange text-4xl font-bold">
             PAYMENT METHOD :{" "}
           </p>
-          <p>{userData.paymentMethod}</p>
+          <p className="text-white text-4xl font-body ">
+            {userData.paymentMethod}
+          </p>
         </div>
         <div className="flex gap-3">
           <p className="font-body text-MainOrange text-4xl font-bold">
             ROLE :{" "}
           </p>
-          <p>{userData.role}</p>
+          <p className="text-white text-4xl font-body ">{userData.role}</p>
         </div>
         <div>
-          <EditUserPersonalInfo />
+          <EditUserPersonalInfo getUserInfo={getUserInfo} />
         </div>
       </div>
     </div>

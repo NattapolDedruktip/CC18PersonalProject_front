@@ -21,8 +21,12 @@ import {
 } from "@/components/ui/select";
 
 import React, { useState } from "react";
+import { editProfile } from "../api/user";
+import useAuthStore from "../stores/auth-store";
 
-function EditUserPersonalInfo() {
+function EditUserPersonalInfo({ getUserInfo }) {
+  const token = useAuthStore((state) => state.token);
+  const user = useAuthStore((state) => state.user);
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -31,12 +35,18 @@ function EditUserPersonalInfo() {
     gender: "",
     paymentMethod: "",
   });
+  const [open, setOpen] = useState(false); // Dialog open state
+  const [dateError, setDateError] = useState(""); // Error state for date validation
 
   const hdlOnChange = (e) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
+
+    if (e.target.name === "dateOfBirth") {
+      validateDate(e.target.value);
+    }
   };
 
   const hdlSelectChange = (name, value) => {
@@ -46,17 +56,35 @@ function EditUserPersonalInfo() {
     });
   };
 
-  const hdlEditProfile = (e) => {
+  // Date validation function
+  const validateDate = (date) => {
+    const dateRegex = /^\d{4}\/\d{2}\/\d{2}$/; // YYYY/MM/DD format
+    if (!dateRegex.test(date)) {
+      setDateError("Date must be in the format YYYY/MM/DD.");
+    } else {
+      setDateError(""); // Clear error if valid
+    }
+  };
+
+  const hdlEditProfile = async (e) => {
     e.preventDefault();
-    console.log(form);
+
+    if (dateError) {
+      return; // Prevent form submission if there's a date error
+    }
+
+    await editProfile(token, user.id, form);
+    await getUserInfo();
+    setOpen(false); // Close dialog on success
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
           className="border-4 bg-MyBg border-MainOrange text-MainOrange text-3xl font-bold font-bebas px-7 py-6 rounded-full tracking-widest hover:bg-MainOrange hover:text-InputText transition"
           variant="outline"
+          onClick={() => setOpen(true)}
         >
           EDIT PROFILE
         </Button>
@@ -120,6 +148,9 @@ function EditUserPersonalInfo() {
                 value={form.dateOfBirth}
                 className="col-span-3"
               />
+              {dateError && (
+                <p className="col-span-3 text-red-600">{dateError}</p>
+              )}
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="gender" className="text-right">

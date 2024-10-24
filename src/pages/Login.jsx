@@ -56,9 +56,9 @@ function Login() {
   };
 
   return (
-    <div className="bg-MyBg h-[86vh] flex items-center justify-center">
-      <div className="bg-MyBg border-8 border-MainOrange rounded-lg p-10">
-        <h1 className="text-MainOrange text-6xl font-body font-bold mb-8 text-center">
+    <div className="bg-MyBg h-[100vh] flex items-center justify-center">
+      <div className="mb-[13vh] bg-MyBg border-8 border-MainOrange rounded-lg p-10">
+        <h1 className="text-MainOrange  text-6xl font-body font-bold mb-8 text-center">
           LOG IN
         </h1>
 

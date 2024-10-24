@@ -23,13 +23,15 @@ function HeaderAvatar() {
 
   useEffect(() => {
     getAllUserInfo(token).then((result) => {
-      setUserData(result.data.user);
+      setUserData(result.data);
     });
   }, []);
   const hdlLogout = () => {
     actionLogout();
     navigate("/");
   };
+
+  console.log(userData, "userData");
   return (
     <div className="flex gap-4 ">
       <div className="flex justify-center items-center text-4xl text-bebas font-bold text-InputBg ">
@@ -39,8 +41,8 @@ function HeaderAvatar() {
         <DropdownMenuTrigger>
           <div className="h-[104px] flex border-red-100">
             <div className="flex items-center">
-              <Avatar className="w-20 h-20 bg-blue-50">
-                <AvatarImage src={userData.image || cat} />
+              <Avatar className="w-20 h-20 bg-blue-50 border-4 border-MainOrange">
+                <AvatarImage src={userData?.userImage || cat} />
                 <AvatarFallback>{"User's Profile"}</AvatarFallback>
               </Avatar>
             </div>

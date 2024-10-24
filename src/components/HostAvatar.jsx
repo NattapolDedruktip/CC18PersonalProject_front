@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useAuthStore from "../stores/auth-store";
 import { useNavigate } from "react-router-dom";
 import { AiFillCaretDown } from "react-icons/ai";
@@ -11,27 +11,38 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { getAllUserInfo } from "../api/auth";
 
 function HostAvatar() {
+  const [userData, setUserData] = useState({});
   const navigate = useNavigate();
   const actionLogout = useAuthStore((state) => state.actionLogout);
   const user = useAuthStore((state) => state.user);
+  const token = useAuthStore((state) => state.user);
+
+  useEffect(() => {
+    getAllUserInfo(token).then((result) => {
+      setUserData(result.data);
+    });
+  }, []);
 
   const hdlLogout = () => {
     actionLogout();
     navigate("/");
   };
+
+  console.log(userData);
   return (
     <div className="flex gap-4">
       <div className="flex justify-center items-center text-4xl text-bebas font-bold text-MainOrange">
-        Host's name
+        {user.role} : {userData.firstName} {userData.lastName}
       </div>
       <DropdownMenu>
         <DropdownMenuTrigger>
           <div className="h-[104px] flex border-red-100">
             <div className="flex items-center">
               <Avatar className="w-20 h-20 bg-blue-50">
-                <AvatarImage src={cat} />
+                <AvatarImage src={userData?.userImage || cat} />
                 <AvatarFallback>{"Host's Profile"}</AvatarFallback>
               </Avatar>
             </div>
@@ -42,7 +53,7 @@ function HostAvatar() {
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="bg-MainOrange">
-          <DropdownMenuItem>
+          {/* <DropdownMenuItem>
             <div
               onClick={() => {
                 navigate("/host");
@@ -51,7 +62,7 @@ function HostAvatar() {
             >
               Account
             </div>
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
           <DropdownMenuItem>
             <div
               onClick={hdlLogout}
