@@ -35,8 +35,6 @@ function Register() {
     });
   };
 
-  const hdlUpdateMember = (e) => {};
-
   const hdlSubmit = async (e) => {
     e.preventDefault();
     // console.log(form)
