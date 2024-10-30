@@ -35,7 +35,7 @@ function Register() {
     });
   };
 
-  const hdlSubmit = async (e) => {
+  const hdlSubmit = (e) => {
     e.preventDefault();
     // console.log(form)
 
@@ -49,10 +49,17 @@ function Register() {
 
     // console.log(form);
     // actionRegister(form)
-    await register(form);
-    setForm(initialState);
-    toast.success("Your Register is successfully!");
-    navigate("/");
+    register(form)
+      .then((result) => {
+        console.log(result, "result");
+        setForm(initialState);
+        toast.success("Your Register is successfully!");
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err, "err");
+        toast.error(err.response.data.message);
+      });
   };
 
   return (

@@ -15,6 +15,7 @@ const useAuthStore = create(
           console.log("resp", resp.data);
           toast.success(resp.data.message);
         } catch (err) {
+          console.log(err);
           console.log(err.response.data.message);
           toast.error(err.response.data.message);
         }
