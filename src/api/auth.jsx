@@ -1,30 +1,16 @@
-import axios from "axios";
+import axios from "../config/axios";
 
 export const register = async (form) =>
-  await axios.post("http://localhost:8000/auth/register", form);
+  await axios.post("/auth/register", form);
 
-export const login = async (form) =>
-  await axios.post("http://localhost:8000/auth/login", form);
+export const login = async (form) => await axios.post("/auth/login", form);
 
-export const getUserInfo = async (token) =>
-  await axios.get("http://localhost:8000/user", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const getUserInfo = async (token) => await axios.get("/user");
 
 export const getHostInfo = async (token) => {
-  return await axios.get("http://localhost:8000/host", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return await axios.get("/host");
 };
 
 export const getAllUserInfo = async (token) => {
-  return await axios.get("http://localhost:8000/user/all", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return await axios.get("/user/all");
 };

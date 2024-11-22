@@ -1,25 +1,15 @@
-import axios from "axios";
+import axios from "../config/axios";
 
 export const uploadHotelPics = async (token, form) => {
   console.log(form);
   return axios.post(
-    "http://localhost:8000/host/images",
+    "/host/images",
 
-    form,
-
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+    form
   );
 };
 
 export const removeHotelPic = async (token, formRemove) => {
   console.log(formRemove);
-  return axios.post("http://localhost:8000/host/removeImage", formRemove, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return axios.post("/host/removeImage", formRemove, {});
 };

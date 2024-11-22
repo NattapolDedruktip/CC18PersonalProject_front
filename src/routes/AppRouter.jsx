@@ -19,7 +19,7 @@ import HostHistory from "../pages/host/HostHistory";
 import HostInfoLayout from "../layouts/host-layout/HostInfoLayout";
 import UserHotelDetail from "../components/UserHotelDetail";
 import HostHotelDetailEdit from "../pages/host/HostHotelDetailEdit";
-import ProtectRouterUser from "./protectRouterUser";
+import ProtectRouterUser from "./ProtectRouterUser";
 import ProtectRouterHost from "./ProtectRouterHost";
 
 const router = createBrowserRouter([

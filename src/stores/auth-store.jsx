@@ -32,6 +32,9 @@ const useAuthStore = create(
             token: resp.data.token,
           });
 
+          // set token to localstorage for intercepter
+          localStorage.setItem("token", resp.data.token);
+
           return resp;
         } catch (err) {
           console.log(err.response.data.message);
