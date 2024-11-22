@@ -9,10 +9,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-import dog1 from "../assets/dog.png";
-import dog2 from "../assets/dog2.png";
-import dog4 from "../assets/dog4.png";
-
 function HotelRoomPics({ item, carouselPublicId, setCarouselPublicId }) {
   const [count, setCount] = useState(0);
   const handleClick = (value) => {
