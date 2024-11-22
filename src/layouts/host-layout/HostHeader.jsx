@@ -1,5 +1,5 @@
-import HostAvatar from "@/src/components/HostAvatar";
-import HostMainLogo from "@/src/components/hostMainLogo";
+import HostAvatar from "../../components/HostAvatar";
+import HostMainLogo from "../../components/hostMainLogo";
 import React from "react";
 
 function HostHeader() {
