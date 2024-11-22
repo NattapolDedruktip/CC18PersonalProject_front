@@ -1,6 +1,6 @@
 import React from "react";
-import HeaderAvatar from "@/src/components/HeaderAvatar";
-import UserMainLogo from "@/src/components/UserMainLogo";
+import HeaderAvatar from "../../components/HeaderAvatar";
+import UserMainLogo from "../../components/UserMainLogo";
 
 function UserHeader() {
   return (
