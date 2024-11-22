@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useAuthStore from "../stores/auth-store";
 import { getHostInfo } from "../api/auth";
-import LoadingToRedirect from "./loadingToRedirect";
+import LoadingToRedirect from "./LoadingToRedirect";
 
 function ProtectRouterHost({ element }) {
   const [ok, setOk] = useState(false);

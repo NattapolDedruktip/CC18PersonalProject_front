@@ -1,7 +1,7 @@
-import CreateHote from "@/src/components/CreateHote";
-import HostMyHoteItem from "@/src/components/HostMyhoteItem";
-import useAuthStore from "@/src/stores/auth-store";
-import useHostStore from "@/src/stores/host-store";
+import CreateHote from "../../components/CreateHote";
+import HostMyHoteItem from "../../components/HostMyHoteItem";
+import useAuthStore from "../../stores/auth-store";
+import useHostStore from "../../stores/host-store";
 import React, { useState, useEffect } from "react";
 
 function MyHote() {
